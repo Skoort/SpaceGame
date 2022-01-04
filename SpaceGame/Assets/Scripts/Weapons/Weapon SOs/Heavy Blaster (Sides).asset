@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323b611839ce89440be3ebab51aaf2db, type: 3}
+  m_Name: Heavy Blaster (Sides)
+  m_EditorClassIdentifier: 
+  Name: Heavy Blaster (Sides)
+  Compartment: 2
+  MaxAmmo: 60
+  MinDamage: 10
+  MaxDamage: 20
+  IsAutomatic: 1
+  RateOfFire: 5
+  IsHitscan: 0
+  ProjectilePrefab: {fileID: 7771406420908630987, guid: c795b970a4183b147ab9b7c4958b898f, type: 3}
+  Range: 30
+  Spread: 1
+  Recoil: 0

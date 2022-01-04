@@ -1,3 +1,4 @@
+using SpaceGame.Pooling;
 using SpaceGame.Weapons.Projectiles;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,14 +8,15 @@ namespace SpaceGame.Weapons
 { 
     public class ProjectileFiringSystem : FiringSystem
 	{
-		[SerializeField] private GameObject _projectilePrefab = default;
+		[SerializeField] private Projectile _projectilePrefab = default;
 
 		protected override void DoFire()
 		{
-			var projectile = ProjectilePool.Instance.RequestProjectile(_projectilePrefab);
-			if (Target != null)
+			foreach (var origin in Origins)
 			{ 
-				// Somehow give the target information to the projectile.
+				var projectile = ObjectPool.Instance.RequestObject(_projectilePrefab.ResourceName, _projectilePrefab.InstanceObject, origin).GetComponent<Projectile>();
+				projectile.Target = Target;
+				projectile.HitLayer = HitLayer;
 			}
 		}
     }

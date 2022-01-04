@@ -1,31 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
+using SpaceGame.Pooling;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace SpaceGame.Weapons.Projectiles
-
-{ 
-    public class RaycastProjectile : MonoBehaviour
+{
+	public class RaycastProjectile : Projectile
     {
-        [SerializeField] private float _speed = 0;
+		[SerializeField] private PoolableObject _explosionPrefab = default;
 
-        [SerializeField] private UnityEvent _onHit = null;
-        [SerializeField] private UnityEvent _onMiss = null;
-
-		private void OnEnable()
+		protected override void Update()
 		{
-			
+			base.Update();
+
+			var delta = Speed * Time.deltaTime;
+			if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, delta, HitLayer.value))
+			{
+				transform.position = hitInfo.point;
+				OnHit();
+			}
+			else
+			{ 
+				transform.position += transform.forward * delta;
+			}
 		}
 
-		private void OnDisable()
+		public override void OnHit()
 		{
-			
+			Debug.Log($"{gameObject.name} hit something!");
+
+			ObjectPool.Instance.RequestObject(_explosionPrefab.ResourceName, _explosionPrefab.InstanceObject, transform);
+
+			base.OnHit();
 		}
 
-		private void FixedUpdate()
+		public override void OnMiss()
 		{
-			
+			base.OnHit();
 		}
 	}
 }

@@ -38,6 +38,9 @@ namespace SpaceGame
 		private void Awake()
 		{
             _rb = GetComponent<Rigidbody>();
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
 		}
 
 		private void FixedUpdate()
@@ -51,7 +54,7 @@ namespace SpaceGame
             _currentUpDown = Input.GetAxis("VerticalThrust");
             _currentStrafe = Input.GetAxis("Horizontal");
             _currentRoll = Input.GetAxis("Roll");
-            _currentPitchYaw = new Vector2(0, Input.GetAxis("Mouse Y"));
+            _currentPitchYaw = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
             // Roll
             _rb.AddRelativeTorque(Vector3.back * _currentRoll * _rollTorque * Time.fixedDeltaTime);
@@ -71,12 +74,12 @@ namespace SpaceGame
             }
             else
             {
-                _rb.AddRelativeForce(Vector3.forward * _glide * Time.fixedDeltaTime);
-                _glide -= _thrustGlideReduction;
-                if (_glide < 0)
-                {
-                    _glide = 0;
-                }
+                //_rb.AddRelativeForce(Vector3.forward * -_glide * Time.fixedDeltaTime);
+                //_glide -= _thrustGlideReduction;
+                //if (_glide < 0)
+                //{
+                //    _glide = 0;
+                //}
             }
 
             // Up/down
@@ -87,12 +90,12 @@ namespace SpaceGame
             }
             else
             {
-                _rb.AddRelativeForce(Vector3.up * _verticalGlide * Time.fixedDeltaTime);
-                _verticalGlide -= _upDownGlideReduction;
-                if (_verticalGlide < 0)
-                {
-                    _verticalGlide = 0;
-                }
+                //_rb.AddRelativeForce(Vector3.up * -_verticalGlide * Time.fixedDeltaTime);
+                //_verticalGlide -= _upDownGlideReduction;
+                //if (_verticalGlide < 0)
+                //{
+                //    _verticalGlide = 0;
+                //}
             }
 
             // Strafing
@@ -103,12 +106,12 @@ namespace SpaceGame
             }
             else
             {
-                _rb.AddRelativeForce(Vector3.right * _horizontalGlide * Time.fixedDeltaTime);
-                _horizontalGlide -= _leftRightGlideReduction;
-                if (_horizontalGlide < 0)
-                {
-                    _horizontalGlide = 0;
-                }
+                //_rb.AddRelativeForce(Vector3.right * -_horizontalGlide * Time.fixedDeltaTime);
+                //_horizontalGlide -= _leftRightGlideReduction;
+                //if (_horizontalGlide < 0)
+                //{
+                //    _horizontalGlide = 0;
+                //}
             }
         }
 	}
