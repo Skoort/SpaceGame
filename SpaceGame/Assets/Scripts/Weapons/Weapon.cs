@@ -1,3 +1,4 @@
+using SpaceGame.Weapons.Projectiles;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,8 @@ namespace SpaceGame.Weapons
 
         public int MaxAmmo;
 
+        public int ReloadTime;
+
         public float MinDamage;
         public float MaxDamage;
 
@@ -31,12 +34,10 @@ namespace SpaceGame.Weapons
 
         public bool IsHitscan;
         [Tooltip(tooltip: "Only necessary if IsHitscan == false.")]
-        public GameObject ProjectilePrefab;
+        public Projectile ProjectilePrefab;
 
         public float Range;
 
         public float Spread;
-
-        public float Recoil;  // This probably won't come into play, as I'm making this a top-down game.
     }
 }

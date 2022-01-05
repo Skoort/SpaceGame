@@ -7,7 +7,7 @@ namespace SpaceGame.Pooling
     {
         private Dictionary<string, Queue<GameObject>> _availableObjects;
 
-        public static ObjectPool Instance { get; set; }
+        public static ObjectPool Instance { get; private set; }
         
         private void Awake()
         {
@@ -24,7 +24,7 @@ namespace SpaceGame.Pooling
             }
         }
 
-        public GameObject RequestObject(string resourceName, GameObject objectPrefab, Transform desiredTransform)
+        public GameObject RequestObject(string resourceName, GameObject objectPrefab, Transform desiredTransform = null)
         {
             GameObject myObject;
             if (_availableObjects.TryGetValue(resourceName, out var queue))

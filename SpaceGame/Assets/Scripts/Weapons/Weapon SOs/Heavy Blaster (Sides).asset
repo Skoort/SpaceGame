@@ -15,12 +15,12 @@ MonoBehaviour:
   Name: Heavy Blaster (Sides)
   Compartment: 2
   MaxAmmo: 60
+  ReloadTime: 0
   MinDamage: 10
   MaxDamage: 20
   IsAutomatic: 1
   RateOfFire: 5
   IsHitscan: 0
-  ProjectilePrefab: {fileID: 7771406420908630987, guid: c795b970a4183b147ab9b7c4958b898f, type: 3}
+  ProjectilePrefab: {fileID: 4387830455753471212, guid: c795b970a4183b147ab9b7c4958b898f, type: 3}
   Range: 30
   Spread: 1
-  Recoil: 0

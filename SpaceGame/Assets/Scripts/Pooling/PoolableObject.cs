@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,5 +41,7 @@ namespace SpaceGame.Pooling
         protected virtual void OnTimeElapsed()
         { 
         }
+
+        public event Action<PoolableObject> OnReclaimed;
 	}
 }

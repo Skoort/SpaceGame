@@ -11,7 +11,7 @@ namespace SpaceGame.Weapons.Projectiles
 		{
 			base.Update();
 
-			var delta = Speed * Time.deltaTime;
+			var delta = _speed * Time.deltaTime;
 			if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, delta, HitLayer.value))
 			{
 				transform.position = hitInfo.point;

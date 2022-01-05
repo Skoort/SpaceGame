@@ -5,7 +5,8 @@ namespace SpaceGame.Weapons.Projectiles
 {
 	public abstract class Projectile : PoolableObject
 	{
-		[SerializeField] protected float Speed = 100;
+		[SerializeField] protected float _speed = 100;
+		public float Speed => _speed;
 
 		public Transform Target { get; set; }
 		public LayerMask HitLayer { get; set; }
