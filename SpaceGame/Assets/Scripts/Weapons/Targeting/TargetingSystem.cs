@@ -16,6 +16,8 @@ namespace SpaceGame.Weapons.Targeting
 
         public List<TargetLead> Leads;
 
+        [SerializeField] protected Transform MeasureDistanceFrom = default;
+
         public TargetLead GetLead(Target target)
         {
             return Leads.Where(x => x.Target == target).First();
@@ -28,7 +30,7 @@ namespace SpaceGame.Weapons.Targeting
                 : FiringSystem.Weapon.ProjectilePrefab.Speed;
             foreach (var lead in Leads)
             {
-                var distanceToLead = (lead.Target.transform.position - transform.position).magnitude;
+                var distanceToLead = (lead.Target.transform.position - MeasureDistanceFrom.position).magnitude;
                 var eta = distanceToLead / projectileSpeed;
                 lead.transform.position = lead.Target.GetFuturePosition(eta);
             }
@@ -36,6 +38,11 @@ namespace SpaceGame.Weapons.Targeting
 
         private void Start()
         {
+            if (MeasureDistanceFrom == null)
+            {
+                MeasureDistanceFrom = this.transform;
+            }
+
             Leads = new List<TargetLead>();
             foreach (var target in GameManager.Instance.Targets)
             {

@@ -21,14 +21,18 @@ namespace SpaceGame.Weapons
         // Consider making these serializable UnityEvents for animations, muzzle flashes and other effects.
         public event Action OnOutOfAmmo;
         public event Action OnFire;
+        public event Action OnFinishedReloading;
 
         // I envision this being used to make a gun glow with energy when it is ready to fire, but this is probably better done with animation events.
         public event Action OnNextShotProgressAt50;
         public event Action OnNextShotReady;
 
         public bool IsFiring { get; protected set; }
+        public bool IsReloading { get; protected set; }
 
-        public int Ammo { get; protected set; }
+		public int Ammo { get; protected set; }
+
+        private float _reloadProgress;
 
         public float NextShotProgress { get; protected set; } = 1;
 
@@ -36,13 +40,18 @@ namespace SpaceGame.Weapons
 
         public void Fire()
         {
+            if (IsReloading)
+            {
+                return;  // This prevents queuing a shot while reloading and then shooting as soon as that finishes.
+            }
+
             IsFiring = true;
 
             TryToFire();  // Always fire the first shot during the first frame, unless the weapon is not ready to fire yet.
 
             if (!Weapon.IsAutomatic && (1 - NextShotProgress) > _nextShotInputLeeway)
             {
-                IsFiring = false;
+                IsFiring = false; // Prevent rapid fire of non-automatic weapons by rapidly clicking. Allow queuing a shot if it is almost time to shoot.
             }
         }
 
@@ -54,6 +63,11 @@ namespace SpaceGame.Weapons
 
         protected bool TryToFire()
         {
+            if (IsReloading)
+            {
+                return false;
+            }
+
             if (!IsFiring || NextShotProgress < 1)
             {
                 return false;
@@ -79,13 +93,26 @@ namespace SpaceGame.Weapons
 
         public void Reload()
         {
-            Ammo = Weapon.MaxAmmo;
+            IsReloading = true;
+            IsFiring = false;  // Cancel firing (automatic) weapon when you start reloading.
         }
 
         private void Update()
         {
-            NextShotProgress += Time.deltaTime * Weapon.RateOfFire;
+            var deltaTime = Time.deltaTime;
+            NextShotProgress += deltaTime * Weapon.RateOfFire;
 
+            if (IsReloading)
+            {
+                _reloadProgress += deltaTime;
+                if (_reloadProgress >= Weapon.ReloadTime)
+                {
+                    IsReloading = false;
+                    _reloadProgress = 0;
+                    Ammo = Weapon.MaxAmmo;
+                }
+            }
+            
             TryToFire();
         }
 

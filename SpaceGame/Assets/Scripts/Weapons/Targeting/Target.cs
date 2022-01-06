@@ -14,7 +14,7 @@ namespace SpaceGame.Weapons.Targeting
 			GameManager.Instance.RegisterTarget(this);
 		}
 
-		private void Update()
+		private void FixedUpdate()
 		{
 			if (_rb != null)
 			{

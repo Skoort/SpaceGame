@@ -7,11 +7,9 @@ namespace SpaceGame.Weapons.Projectiles
     {
 		[SerializeField] private PoolableObject _explosionPrefab = default;
 
-		protected override void Update()
+		private void FixedUpdate()
 		{
-			base.Update();
-
-			var delta = _speed * Time.deltaTime;
+			var delta = _speed * Time.fixedDeltaTime;
 			if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, delta, HitLayer.value))
 			{
 				transform.position = hitInfo.point;
