@@ -23,13 +23,13 @@ namespace SpaceGame.Weapons
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 Debug.Log("Started shooting!");
                 _currentWeapon?.Fire();
             }
             else
-            if (Input.GetKeyUp(KeyCode.Mouse0))
+            if (Input.GetKeyUp(KeyCode.Mouse1))
             {
                 Debug.Log("Stopped shooting!");
                 _currentWeapon?.StopFiring();

@@ -10,7 +10,7 @@ namespace SpaceGame.Weapons.Projectiles
 		private void FixedUpdate()
 		{
 			var delta = _speed * Time.fixedDeltaTime;
-			if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, delta, HitLayer.value))
+			if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, delta, HitLayer.value) && HitLayer.Contains(hitInfo.transform.gameObject.layer))
 			{
 				transform.position = hitInfo.point;
 				OnHit();

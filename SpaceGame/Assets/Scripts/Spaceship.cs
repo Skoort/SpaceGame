@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpaceGame
-{ 
-    [RequireComponent(typeof(Rigidbody))]
+{
+	[RequireComponent(typeof(Rigidbody))]
     public class Spaceship : MonoBehaviour
     {
         [Header("*** Ship Movement Settings ***")]
@@ -17,6 +15,8 @@ namespace SpaceGame
 
         [SerializeField] private bool _invertPitch = false;
 
+        [SerializeField] private float _maxVelocity = 100;
+
         private Rigidbody _rb;
 
 		private float _currentThrust;
@@ -25,68 +25,138 @@ namespace SpaceGame
         private float _currentRoll;
         private Vector2 _currentPitchYaw;
 
+        [SerializeField] private Camera _camera = default;
+        [SerializeField] private LayerMask _mouseCaptureLayer = default;
+        [SerializeField] private float _distFromMouseCapturePlane = 100;
+        [SerializeField] private Transform _mouseCaptureTransform = default;
 
-        private float _distanceToMouseCapturePlane = 100;
-        private Plane _mouseCapturePlane;
-        private Transform _trackedLocation;
+        [SerializeField] private AnimationCurve _turnStrengthCurve = default;
 
 		private void Awake()
 		{
             _rb = GetComponent<Rigidbody>();
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
 		}
 
 		private void FixedUpdate()
 		{
-            HandleMovement();
+            var fixedDeltaTime = Time.fixedDeltaTime;
+
+            CalculateHeading();
+            HandleMovement(fixedDeltaTime);
 		}
 
         private void CalculateHeading()
-        { 
-        
+        {
+            var ray = _camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hitInfo, _distFromMouseCapturePlane, _mouseCaptureLayer.value, QueryTriggerInteraction.Collide))
+            {
+                _mouseCaptureTransform.position = hitInfo.point;
+                Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
+            }
         }
 
-		private void HandleMovement()
+        private bool _isHoldingDownMouse0;
+        private bool _isHoldingDownMouse1;
+		private void HandleMovement(float deltaTime)
 		{
-            _currentThrust = Input.GetAxis("Vertical");
-            _currentUpDown = Input.GetAxis("VerticalThrust");
-            _currentStrafe = Input.GetAxis("Horizontal");
-            _currentRoll = Input.GetAxis("Roll");
-            _currentPitchYaw = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                _isHoldingDownMouse0 = true;
+            } else
+            if (Input.GetKeyUp(KeyCode.Mouse0))
+            {
+                _isHoldingDownMouse0 = false;
+            }
 
-            var fixedDeltaTime = Time.fixedDeltaTime;
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                _isHoldingDownMouse1 = true;
+            } else
+            if (Input.GetKeyUp(KeyCode.Mouse1))
+            {
+                _isHoldingDownMouse1 = false;
+            }
+
+            if (_isHoldingDownMouse0)
+            {
+                HandlePitchAndYaw1(deltaTime);
+            }
+            else
+            {
+                HandlePitchAndYaw2(deltaTime);
+            }
+
+            HandleThrustAndRoll(deltaTime);
+        }
+
+        // Pitch and yaw are controlled by moving towards the target (cursor).
+        private void HandlePitchAndYaw1(float deltaTime)
+        {
+            var offset = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2);
+            var relOffsetX = offset.x / (Screen.width / 2);
+            var relOffsetY = offset.y / (Screen.height / 2);
+
+            var turnStrengthYaw = Mathf.Sign(relOffsetX) *  _turnStrengthCurve.Evaluate(Mathf.Clamp01(Mathf.Abs(relOffsetX)));
+            var turnStrengthPitch = Mathf.Sign(relOffsetY) * _turnStrengthCurve.Evaluate(Mathf.Clamp01(Mathf.Abs(relOffsetY)));
+
+            // Pitch
+            _rb.AddRelativeTorque(Vector3.right * turnStrengthPitch * -_pitchTorque * deltaTime);
+
+            // Yaw
+            _rb.AddRelativeTorque(Vector3.up * turnStrengthYaw * _yawTorque * deltaTime);
+        }
+
+        // Pitch and yaw are controlled by movements of the mouse
+        private void HandlePitchAndYaw2(float deltaTime)
+        {
+            var turnStrengthPitch = Input.GetAxis(Strings.RotateX);
+            var turnStrengthYaw = Input.GetAxis(Strings.RotateY);
+
+            // Pitch
+            _rb.AddRelativeTorque(Vector3.right * turnStrengthPitch * _pitchTorque * (_invertPitch ? +1 : -1) * deltaTime);
+
+            // Yaw
+            _rb.AddRelativeTorque(Vector3.up * turnStrengthYaw * _yawTorque * deltaTime);
+        }
+
+        private void HandleThrustAndRoll(float deltaTime)
+        {
+            _currentThrust = Input.GetAxis(Strings.MoveForward);
+            _currentUpDown = Input.GetAxis(Strings.MoveVertical);
+            _currentStrafe = Input.GetAxis(Strings.MoveHorizontal);
+            _currentRoll = Input.GetAxis(Strings.RotateZ);
 
             // Roll
-            _rb.AddRelativeTorque(Vector3.back * _currentRoll * _rollTorque * fixedDeltaTime);
-
-			// Pitch
-			_rb.AddRelativeTorque(Vector3.right * Mathf.Clamp(_currentPitchYaw.y * (_invertPitch ? +1 : -1), -1F, +1F) * _pitchTorque * fixedDeltaTime);
-
-			// Yaw
-			_rb.AddRelativeTorque(Vector3.up * Mathf.Clamp(_currentPitchYaw.x, -1, +1) * _yawTorque * fixedDeltaTime);
+            _rb.AddRelativeTorque(Vector3.back * _currentRoll * _rollTorque * deltaTime);
 
             // Thrust
             if (_currentThrust > 0.1F)
             {
-                _rb.AddRelativeForce(Vector3.forward * _currentThrust * _thrust * fixedDeltaTime);
+                _rb.AddRelativeForce(Vector3.forward * _currentThrust * _thrust * deltaTime);
             } else
             if (_currentThrust < -0.1F)
             {
-                _rb.AddRelativeForce(Vector3.forward * _currentThrust * _thrust * 0.5F * fixedDeltaTime);
+                _rb.AddRelativeForce(Vector3.forward * _currentThrust * _thrust * 0.5F * deltaTime);
             }
 
             // Up/down
             if (_currentUpDown > 0.1F || _currentUpDown < -0.1F)
             {
-                _rb.AddRelativeForce(Vector3.up * _currentUpDown * _upThrust * fixedDeltaTime);
+                _rb.AddRelativeForce(Vector3.up * _currentUpDown * _upThrust * deltaTime);
             }
 
             // Strafing
             if (_currentStrafe > 0.1F || _currentStrafe < -0.1F)
             {
-                _rb.AddRelativeForce(Vector3.right * _currentStrafe * _strafeThrust * fixedDeltaTime);
+                _rb.AddRelativeForce(Vector3.right * _currentStrafe * _strafeThrust * deltaTime);
+            }
+
+            if (_rb.velocity.magnitude > _maxVelocity)
+            {
+                _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxVelocity);
             }
         }
 	}
