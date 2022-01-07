@@ -15,7 +15,7 @@ namespace SpaceGame.Ai.Ship
 
 		public override NodeState Evaluate()
 		{
-            if (_shipAi.Target == null)
+            if (_shipAi.TargetPosition == null)
             {
                 Debug.Log("Has no target!");
                 return NodeState.FAILURE;

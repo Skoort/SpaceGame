@@ -17,12 +17,12 @@ namespace SpaceGame.Ai.Ship
 
 		public override NodeState Evaluate()
 		{
-            if (_shipAi.Target == null)
+            if (_shipAi.TargetPosition == null)
             {
                 return NodeState.FAILURE;
             }
 
-            var distanceToTarget = Vector3.Distance(_shipAi.Transform.position, _shipAi.Target.Value);
+            var distanceToTarget = Vector3.Distance(_shipAi.Transform.position, _shipAi.TargetPosition.Value);
             if (distanceToTarget <= _stoppingRange)
             {
                 return NodeState.SUCCESS;

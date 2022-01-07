@@ -17,9 +17,10 @@ namespace SpaceGame.Ai.Ship
 
 		public override NodeState Evaluate()
 		{
-            Debug.Log("Found target!");
+            Debug.Log("Found wander target!");
 
-            _shipAi.Target = _shipAi.Transform.position + Random.insideUnitSphere * _range;
+            _shipAi.CurrentTarget = null;  // When you find a wander point, get rid of the target.
+            _shipAi.TargetPosition = _shipAi.Transform.position + Random.insideUnitSphere * _range;
 
             return NodeState.SUCCESS;
 		}

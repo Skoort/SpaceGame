@@ -408,6 +408,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret
       objectReference: {fileID: 0}
+    - target: {fileID: 1899383752030231894, guid: 7ab9fa1b02b2c3847b5f8e1e98102431, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1899383752030231896, guid: 7ab9fa1b02b2c3847b5f8e1e98102431, type: 3}
       propertyPath: Root
       value: 
@@ -495,7 +499,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1899383752030231899, guid: 7ab9fa1b02b2c3847b5f8e1e98102431, type: 3}
   m_PrefabInstance: {fileID: 898762687}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 898762693}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10a62f2764846314fa88d9a05c4d3fd0, type: 3}
@@ -521,6 +525,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1899383752030231897, guid: 7ab9fa1b02b2c3847b5f8e1e98102431, type: 3}
   m_PrefabInstance: {fileID: 898762687}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &898762693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1899383752030231894, guid: 7ab9fa1b02b2c3847b5f8e1e98102431, type: 3}
+  m_PrefabInstance: {fileID: 898762687}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &898762694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898762693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47999a9996a5f6449be5a4e189901263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Team: 0
+  _rb: {fileID: 0}
 --- !u!1 &2038880535
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,6 +864,8 @@ GameObject:
   - component: {fileID: 4431122700532569992}
   - component: {fileID: 4431122700532569996}
   - component: {fileID: 4431122700532569997}
+  - component: {fileID: 4431122700532569999}
+  - component: {fileID: 4431122700532569998}
   m_Layer: 7
   m_Name: AI Ship
   m_TagString: Untagged
@@ -860,8 +885,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274d1470320ce9a4d823c4e28fb7d6ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetingSystem: {fileID: 4431122700532569999}
   _rb: {fileID: 4431122700532569992}
-  _forwardSpeed: 2
+  _forwardSpeed: 5
   _turnSpeed: 80
 --- !u!114 &4431122700532569997
 MonoBehaviour:
@@ -877,3 +903,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Team: 2
   _rb: {fileID: 4431122700532569992}
+--- !u!114 &4431122700532569998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4431122700532569995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a62f2764846314fa88d9a05c4d3fd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEquipped: 1
+  Target: {fileID: 0}
+  Origins: []
+  _weapon: {fileID: 11400000, guid: 954f6d5a3ddd8d84fb98e570e373263a, type: 2}
+  HitLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  IsShotReadyOnSwap: 0
+  _nextShotInputLeeway: 0
+--- !u!114 &4431122700532569999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4431122700532569995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4db96f21743f764e9f0395cffa5eee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 768
+  FiringSystem: {fileID: 4431122700532569998}
+  LeadPrefab: {fileID: 6137145423697779669, guid: bd3684c804598104797f2318b22e2761, type: 3}
+  Leads: []
+  MeasureDistanceFrom: {fileID: 4431122700532569994}

@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SpaceGame.Weapons.Targeting;
 
 namespace SpaceGame.Ai.Ship
 { 
     public class ShipController : MonoBehaviour, IShipAi
     {
+        [SerializeField] private TargetingSystem _targetingSystem = default;
+
         [SerializeField] private Rigidbody _rb = default;
 
         [SerializeField] private float _forwardSpeed = 30;
@@ -13,41 +16,73 @@ namespace SpaceGame.Ai.Ship
 
         public Transform Transform => transform;
 
-        public Vector3? Target { get; set; }
+        private Vector3? _wanderPosition;
+        public Vector3? TargetPosition 
+        {
+            get
+            {
+                if (CurrentTarget != null)
+                {
+                    return CurrentTarget.transform.position;
+                }
+                else
+                {
+                    return _wanderPosition;
+                }
+            }
+            set
+            {
+                if (CurrentTarget != null)
+                {
+                    return;
+                }
+                _wanderPosition = value;
+            } 
+        }
+
+        public TargetLead CurrentTarget { get; set; }
 
         private SequenceNode _rootNode;
-        private SelectorNode _findTargetIfNotExists;
-        private SequenceNode _findNewTargetIfInRange;
-        private SequenceNode _turnAndMoveToTargetSequence;
 
+        private Team _enemyTeam = Team.HUMANS;
+        
 		private void Awake()
 		{
-            _findTargetIfNotExists = new SelectorNode(new List<BehaviourNode>()
+            var tryToFindLead = new SequenceNode(new List<BehaviourNode>()
+            {
+                new IsRandomGreaterThan(0.333F),
+                new FindNewTarget(this, _targetingSystem)
+            });
+
+            var ifNoTargetFindOne = new SelectorNode(new List<BehaviourNode>()
             {
                 new HasTarget(this),
-                new FindWanderPoint(this, 100)
+                new SelectorNode(new List<BehaviourNode>()
+                {
+                    tryToFindLead,
+                    new FindWanderPoint(this, 100)
+                })
             });
 
-            _findNewTargetIfInRange = new SequenceNode(new List<BehaviourNode>()
+            var resetTargetIfInRange = new SequenceNode(new List<BehaviourNode>()
             {
-                new IsWithinRange(this, 10),
-                new FindWanderPoint(this, 100)
+                new IsWithinRange(this, 20),
+                new GenericAction(() => { this.CurrentTarget = null; this.TargetPosition = null; return true; })
             });
 
-            _turnAndMoveToTargetSequence = new SequenceNode(new List<BehaviourNode>()
+            var turnAndMoveToTarget = new SequenceNode(new List<BehaviourNode>()
             {
                 new TurnToTarget(this),
                 new MoveToTarget(this, 10)
             });
 
-            // Get the target and then move to it.
             _rootNode = new SequenceNode(new List<BehaviourNode>()
             {
-                _findTargetIfNotExists,
+                ifNoTargetFindOne,
                 new SelectorNode(new List<BehaviourNode>()
                 { 
-                    _findNewTargetIfInRange,
-                    _turnAndMoveToTargetSequence
+                    resetTargetIfInRange,
+                    turnAndMoveToTarget
                 })
             });
 		}

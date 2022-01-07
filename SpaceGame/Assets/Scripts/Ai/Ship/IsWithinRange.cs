@@ -17,7 +17,7 @@ namespace SpaceGame.Ai.Ship
 
 		public override NodeState Evaluate()
 		{
-            if (_shipAi.Target == null || Vector3.Distance(_shipAi.Transform.position, _shipAi.Target.Value) > _range)
+            if (_shipAi.TargetPosition == null || Vector3.Distance(_shipAi.Transform.position, _shipAi.TargetPosition.Value) > _range)
             {
                 Debug.Log("Not within range!");
                 return NodeState.FAILURE;

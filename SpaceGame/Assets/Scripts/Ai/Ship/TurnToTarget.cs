@@ -15,12 +15,12 @@ namespace SpaceGame.Ai.Ship
 
 		public override NodeState Evaluate()
 		{
-            if (_shipAi.Target == null)
+            if (_shipAi.TargetPosition == null)
             {
                 return NodeState.FAILURE;
             }
 
-            var desiredDirection = _shipAi.Target.Value - _shipAi.Transform.position;
+            var desiredDirection = _shipAi.TargetPosition.Value - _shipAi.Transform.position;
 
             if (Mathf.Abs(Vector3.Angle(_shipAi.Transform.forward, desiredDirection)) < 10)
             {
