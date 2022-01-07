@@ -14,6 +14,8 @@ namespace SpaceGame.Weapons.Projectiles
 		protected override void OnTimeElapsed()
 		{
 			OnMiss();
+
+			base.OnTimeElapsed();
 		}
 
 		public virtual void OnHit()
@@ -21,9 +23,6 @@ namespace SpaceGame.Weapons.Projectiles
 			ObjectPool.Instance.ReleaseObject(this);
 		}
 
-		public virtual void OnMiss()
-		{
-			ObjectPool.Instance.ReleaseObject(this);
-		}
+		public abstract void OnMiss();
 	}
 }

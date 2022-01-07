@@ -27,13 +27,15 @@ namespace SpaceGame.Pooling
         public GameObject RequestObject(string resourceName, GameObject objectPrefab, Transform desiredTransform = null)
         {
             GameObject myObject;
-            if (_availableObjects.TryGetValue(resourceName, out var queue))
+            if (_availableObjects.TryGetValue(resourceName, out var queue) && queue.Count > 0)  // For some reason sometimes this queue can be empty.
             {
                 myObject = queue.Dequeue();
                 if (queue.Count <= 0)
                 {
                     _availableObjects.Remove(objectPrefab.name);
                 }
+
+                myObject.SetActive(true);
             }
             else
             {
@@ -44,11 +46,6 @@ namespace SpaceGame.Pooling
             {
                 myObject.transform.position = desiredTransform.position;
                 myObject.transform.rotation = desiredTransform.rotation;
-            }
-
-            if (!myObject.activeInHierarchy)
-            {
-                myObject.SetActive(true);
             }
 
             return myObject;
@@ -64,6 +61,8 @@ namespace SpaceGame.Pooling
                 _availableObjects.Add(myObject.ResourceName, queue);
             }
             myObject.InstanceObject.SetActive(false);
+            myObject.InspectorOnReclaimedByObjectPool.Invoke();
+            myObject.ResetTimer();
             queue.Enqueue(myObject.InstanceObject);
         }
     }

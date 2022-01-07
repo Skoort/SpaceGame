@@ -348,6 +348,60 @@ MonoBehaviour:
     m_Bits: 4294967295
   IsShotReadyOnSwap: 1
   _nextShotInputLeeway: 0
+--- !u!1 &508877945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 508877946}
+  - component: {fileID: 508877948}
+  - component: {fileID: 508877947}
+  m_Layer: 8
+  m_Name: Collision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &508877946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508877945}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.27, z: 1.87}
+  m_LocalScale: {x: 1, y: 4.475, z: 1.8708}
+  m_Children: []
+  m_Father: {fileID: 2093215881}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!136 &508877947
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508877945}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &508877948
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508877945}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &538896482
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,7 +467,7 @@ MonoBehaviour:
   Target: {fileID: 0}
   Origins:
   - {fileID: 1449516107}
-  _weapon: {fileID: 11400000, guid: 0cf8098d5653aef47a850b8a30dfb428, type: 2}
+  _weapon: {fileID: 11400000, guid: 63e94f61fa081bc4cb92fa2dab09d921, type: 2}
   HitLayer:
     serializedVersion: 2
     m_Bits: 1920
@@ -456,10 +510,10 @@ MonoBehaviour:
   _pivotX: {fileID: 1163292045}
   _pivotY: {fileID: 1055094769}
   _targetFrustumCenter: {fileID: 851246298}
-  _maxYawDelta: 40
-  _maxPitchDelta: 40
-  _maxRange: 100
-  _turnSpeed: 120
+  _maxYawDelta: 100
+  _maxPitchDelta: 90
+  _maxRange: 300
+  _turnSpeed: 130
 --- !u!4 &608193045
 Transform:
   m_ObjectHideFlags: 0
@@ -2428,6 +2482,7 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 657823350}
   - {fileID: 797189033}
+  - {fileID: 508877946}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: -46.577, z: 0}
@@ -2443,12 +2498,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc1186d1921936542b670052615fe726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _yawTorque: 150
-  _pitchTorque: 350
+  _yawTorque: 1500
+  _pitchTorque: 3000
   _rollTorque: 150
-  _thrust: 2600
-  _upThrust: 400
-  _strafeThrust: 400
+  _thrust: 2200
+  _upThrust: 1500
+  _strafeThrust: 1500
   _thrustGlideReduction: 0.5
   _upDownGlideReduction: 0.111
   _leftRightGlideReduction: 0.111

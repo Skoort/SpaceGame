@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace SpaceGame.Pooling
-{ 
-    public class PoolableObject : MonoBehaviour, IPoolable
+{
+	public class PoolableObject : MonoBehaviour, IPoolable
     {
         [SerializeField] private string _resourceName = default;
         public string ResourceName => _resourceName;
@@ -17,6 +16,9 @@ namespace SpaceGame.Pooling
 		private float _elapsedTime;
 		public bool IsReclaimed { get; set; }
 
+        [SerializeField] private UnityEvent _onReclaimedByObjectPool;
+		public UnityEvent InspectorOnReclaimedByObjectPool => _onReclaimedByObjectPool;
+
 		private void OnEnable()
 		{
             _elapsedTime = 0;
@@ -24,7 +26,7 @@ namespace SpaceGame.Pooling
 
 		protected virtual void Update()
         {
-            if (ReclaimAfterSeconds == -1)
+            if (ReclaimAfterSeconds < 0)
             {
                 return;
             }
@@ -33,15 +35,17 @@ namespace SpaceGame.Pooling
             if (_elapsedTime >= ReclaimAfterSeconds)
             {
                 OnTimeElapsed();
-
-                ObjectPool.Instance.ReleaseObject(this);
             }
         }
 
         protected virtual void OnTimeElapsed()
-        { 
+        {
+            ObjectPool.Instance.ReleaseObject(this);
         }
 
-        public event Action<PoolableObject> OnReclaimed;
+        public void ResetTimer()
+        {
+            _elapsedTime = 0;
+        }
 	}
 }

@@ -32,7 +32,6 @@ namespace SpaceGame.Weapons.Projectiles
 
 		public override void OnMiss()
 		{
-			base.OnHit();
 		}
 	}
 }
