@@ -19,7 +19,7 @@ namespace SpaceGame.Pooling
         [SerializeField] private UnityEvent _onReclaimedByObjectPool;
 		public UnityEvent InspectorOnReclaimedByObjectPool => _onReclaimedByObjectPool;
 
-		private void OnEnable()
+		protected virtual void OnEnable()
 		{
             _elapsedTime = 0;
 		}

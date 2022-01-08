@@ -72,7 +72,9 @@ namespace SpaceGame.Weapons.Targeting
         {
             if (TargetTeams.Contains(target.Team))
             { 
-                var lead = ObjectPool.Instance.RequestObject(LeadPrefab.ResourceName, LeadPrefab.gameObject).GetComponent<TargetLead>();
+                var lead = ObjectPool.Instance.RequestObject(
+                    LeadPrefab.ResourceName, 
+                    LeadPrefab.gameObject).GetComponent<TargetLead>();
 		        lead.Target = target;
                 Leads.Add(lead);
 

@@ -24,3 +24,5 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 4387830455753471212, guid: 336caa8f2d9205d4f999361d6f1c9aac, type: 3}
   Range: 30
   Spread: 1
+  AmmoUsedPerShot: 0
+  HeatGeneration: 0

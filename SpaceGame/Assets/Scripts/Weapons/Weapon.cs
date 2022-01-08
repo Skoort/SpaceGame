@@ -39,5 +39,10 @@ namespace SpaceGame.Weapons
         public float Range;
 
         public float Spread;
+
+        public int AmmoUsedPerShot = 1;
+
+        [Tooltip(tooltip: "How many seconds you can shoot consecutively before the gun overheats.")]
+        public int HeatGeneration;  
     }
 }

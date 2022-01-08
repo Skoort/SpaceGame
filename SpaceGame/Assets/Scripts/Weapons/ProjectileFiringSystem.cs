@@ -12,7 +12,11 @@ namespace SpaceGame.Weapons
 		{
 			foreach (var origin in Origins)
 			{ 
-				var projectile = ObjectPool.Instance.RequestObject(Weapon.ProjectilePrefab.ResourceName, Weapon.ProjectilePrefab.InstanceObject, origin).GetComponent<Projectile>();
+				var projectile = ObjectPool.Instance.RequestObject(
+					Weapon.ProjectilePrefab.ResourceName, 
+					Weapon.ProjectilePrefab.gameObject, 
+					origin.position, 
+					origin.rotation).GetComponent<Projectile>();
 				projectile.Target = Target;
 				projectile.HitLayer = HitLayer;
 				projectile.FiredBy = transform.root.gameObject;

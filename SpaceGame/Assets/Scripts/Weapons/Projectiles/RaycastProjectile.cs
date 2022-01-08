@@ -34,7 +34,11 @@ namespace SpaceGame.Weapons.Projectiles
 		{
 			Debug.Log($"{gameObject.name} hit something!");
 
-			ObjectPool.Instance.RequestObject(_explosionPrefab.ResourceName, _explosionPrefab.InstanceObject, transform);
+			ObjectPool.Instance.RequestObject(
+				_explosionPrefab.ResourceName, 
+				_explosionPrefab.gameObject, 
+				transform.position, 
+				transform.rotation);
 
 			base.OnHit();
 		}

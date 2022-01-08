@@ -8,8 +8,8 @@ namespace SpaceGame
         public const string MoveForward = "Move Forward";  // W - S
         public const string MoveHorizontal = "Move Horizontal";  // A - D
         public const string MoveVertical = "Move Vertical";  // Space - Shift
-        public const string MouseDeltaX = "Mouse X";
-        public const string MouseDeltaY = "Mouse Y";
+        public const string MouseDeltaX = "Mouse X (Rotate)";
+        public const string MouseDeltaY = "Mouse Y (Rotate)";
 
         public const string PlayerTag = "Player";
     }

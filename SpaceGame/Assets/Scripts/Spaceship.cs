@@ -28,7 +28,7 @@ namespace SpaceGame
         [SerializeField] private Camera _camera = default;
         [SerializeField] private LayerMask _mouseCaptureLayer = default;
         [SerializeField] private float _distFromMouseCapturePlane = 100;
-        [SerializeField] private Transform _mouseCaptureTransform = default;
+        [SerializeField] private Transform _targetLeadMouse = default;
 
         [SerializeField] private AnimationCurve _turnStrengthCurve = default;
 
@@ -53,7 +53,7 @@ namespace SpaceGame
             var ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hitInfo, _distFromMouseCapturePlane, _mouseCaptureLayer.value, QueryTriggerInteraction.Collide))
             {
-                _mouseCaptureTransform.position = hitInfo.point;
+                _targetLeadMouse.position = hitInfo.point;
                 Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
             }
         }

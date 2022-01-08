@@ -24,7 +24,7 @@ namespace SpaceGame.Pooling
             }
         }
 
-        public GameObject RequestObject(string resourceName, GameObject objectPrefab, Transform desiredTransform = null)
+        public GameObject RequestObject(string resourceName, GameObject objectPrefab, Vector3? desiredPosition = null, Quaternion? desiredRotation = null, Transform desiredParent = null)
         {
             GameObject myObject;
             if (_availableObjects.TryGetValue(resourceName, out var queue) && queue.Count > 0)  // For some reason sometimes this queue can be empty.
@@ -39,13 +39,16 @@ namespace SpaceGame.Pooling
             }
             else
             {
-                myObject = Instantiate(objectPrefab, this.transform);
+                myObject = Instantiate(objectPrefab, desiredParent ?? this.transform);
             }
 
-            if (desiredTransform != null)
+            if (desiredPosition != null)
             {
-                myObject.transform.position = desiredTransform.position;
-                myObject.transform.rotation = desiredTransform.rotation;
+                myObject.transform.position = desiredPosition.Value;
+            }
+            if (desiredRotation != null)
+            { 
+                myObject.transform.rotation = desiredRotation.Value;
             }
 
             return myObject;
