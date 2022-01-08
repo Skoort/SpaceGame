@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323b611839ce89440be3ebab51aaf2db, type: 3}
+  m_Name: Alien Ship Weapon
+  m_EditorClassIdentifier: 
+  Name: Alien Ship Weapon
+  Compartment: 0
+  MaxAmmo: 50
+  ReloadTime: 5
+  MinDamage: 5
+  MaxDamage: 10
+  IsAutomatic: 1
+  RateOfFire: 3
+  IsHitscan: 0
+  ProjectilePrefab: {fileID: 1264554481359880435, guid: 83306b9a42cf99841b9f9eccc869d507, type: 3}
+  Range: 100
+  Spread: 5

@@ -10,9 +10,18 @@ namespace SpaceGame.Weapons.Projectiles
 		private void FixedUpdate()
 		{
 			var delta = _speed * Time.fixedDeltaTime;
-			if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, delta, HitLayer.value) && HitLayer.Contains(hitInfo.transform.gameObject.layer))
+			if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, delta, HitLayer.value) && this.FiredBy != hitInfo.transform.root.gameObject)
 			{
 				transform.position = hitInfo.point;
+
+				var hullInfo = hitInfo.transform.root.GetComponent<HullIntegrity>();
+				if (hullInfo != null)
+				{
+					var damage = Random.Range(WeaponInfo.MinDamage, WeaponInfo.MaxDamage);
+
+					hullInfo.TakeDamage(damage, FiredBy);
+				}
+
 				OnHit();
 			}
 			else

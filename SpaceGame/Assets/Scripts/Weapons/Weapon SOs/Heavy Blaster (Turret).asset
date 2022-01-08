@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Heavy Blaster (Turret)
   Compartment: 2
-  MaxAmmo: 60
-  ReloadTime: 0
+  MaxAmmo: 10
+  ReloadTime: 10
   MinDamage: 10
-  MaxDamage: 20
+  MaxDamage: 30
   IsAutomatic: 1
   RateOfFire: 1
   IsHitscan: 0

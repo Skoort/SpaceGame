@@ -15,6 +15,8 @@ namespace SpaceGame.Weapons
 				var projectile = ObjectPool.Instance.RequestObject(Weapon.ProjectilePrefab.ResourceName, Weapon.ProjectilePrefab.InstanceObject, origin).GetComponent<Projectile>();
 				projectile.Target = Target;
 				projectile.HitLayer = HitLayer;
+				projectile.FiredBy = transform.root.gameObject;
+				projectile.WeaponInfo = Weapon;
 			}
 		}
     }

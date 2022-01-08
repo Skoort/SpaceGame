@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SpaceGame.Weapons;
 using SpaceGame.Weapons.Targeting;
+using SpaceGame.Weapons.Turret;
 
 namespace SpaceGame.Ai.Ship
 { 
     public class ShipController : MonoBehaviour, IShipAi
     {
         [SerializeField] private TargetingSystem _targetingSystem = default;
+        [SerializeField] private AiTurret _aiTurret = default;
 
         [SerializeField] private Rigidbody _rb = default;
 
@@ -16,42 +19,76 @@ namespace SpaceGame.Ai.Ship
 
         public Transform Transform => transform;
 
-        private Vector3? _wanderPosition;
         public Vector3? TargetPosition 
         {
             get
             {
-                if (CurrentTarget != null)
+                if (State == ShipState.PURSUING_TARGET)
                 {
-                    return CurrentTarget.transform.position;
+                    return TargetLead?.transform?.position;
+                } else
+                if (State == ShipState.GOING_TO_POINT)
+                {
+                    return TargetWanderPoint;
                 }
                 else
                 {
-                    return _wanderPosition;
+                    return null;
                 }
             }
-            set
-            {
-                if (CurrentTarget != null)
-                {
-                    return;
-                }
-                _wanderPosition = value;
-            } 
         }
 
-        public TargetLead CurrentTarget { get; set; }
+        public ShipState State { get; set; }
+
+        private float _stoppingRangeTarget = 30;
+        private float _stoppingRangeWanderPoint = 10;
+        public float StoppingRange
+        {
+            get 
+            {
+                if (State == ShipState.PURSUING_TARGET)
+                {
+                    return _stoppingRangeTarget;
+                } else
+                if (State == ShipState.GOING_TO_POINT)
+                {
+                    return _stoppingRangeWanderPoint;
+                }
+                else
+                {
+                    throw new System.Exception($"Invalid access of StoppingRange in state {State}!");
+                }
+            }
+        }
+
+        public Vector3? TargetWanderPoint { get; set; }
+        private TargetLead _targetLead;
+        public TargetLead TargetLead 
+        {
+            get => _targetLead;
+            set
+            {
+                _targetLead = value;
+                if (value == null)
+                {
+                    _aiTurret.IsTurretActive = false;
+                }
+                else
+                {
+                    _aiTurret.IsTurretActive = true;
+                }
+                _aiTurret.ManuallyAssignLead(value);
+            }
+        }
 
         private SequenceNode _rootNode;
 
-        private Team _enemyTeam = Team.HUMANS;
-        
 		private void Awake()
 		{
             var tryToFindLead = new SequenceNode(new List<BehaviourNode>()
             {
-                new IsRandomGreaterThan(0.333F),
-                new FindNewTarget(this, _targetingSystem)
+                new IsRandomGreaterThan(50F),
+                new FindNewTargetLead(this, _targetingSystem)
             });
 
             var ifNoTargetFindOne = new SelectorNode(new List<BehaviourNode>()
@@ -60,20 +97,20 @@ namespace SpaceGame.Ai.Ship
                 new SelectorNode(new List<BehaviourNode>()
                 {
                     tryToFindLead,
-                    new FindWanderPoint(this, 100)
+                    new FindNewWanderPoint(this, 100)
                 })
             });
 
             var resetTargetIfInRange = new SequenceNode(new List<BehaviourNode>()
             {
-                new IsWithinRange(this, 20),
-                new GenericAction(() => { this.CurrentTarget = null; this.TargetPosition = null; return true; })
+                new IsWithinRange(this),
+                new GenericAction(() => { this.State = ShipState.IDLE; this.TargetLead = null; this.TargetWanderPoint = null; return true; })
             });
 
-            var turnAndMoveToTarget = new SequenceNode(new List<BehaviourNode>()
+            var approachTarget = new DoEachNode(new List<BehaviourNode>()
             {
                 new TurnToTarget(this),
-                new MoveToTarget(this, 10)
+                new MoveToTarget(this),
             });
 
             _rootNode = new SequenceNode(new List<BehaviourNode>()
@@ -82,9 +119,32 @@ namespace SpaceGame.Ai.Ship
                 new SelectorNode(new List<BehaviourNode>()
                 { 
                     resetTargetIfInRange,
-                    turnAndMoveToTarget
+                    approachTarget
                 })
             });
+		}
+
+        private void OnTargetLeadRemoved(TargetLead lead)
+        {
+            if (State == ShipState.PURSUING_TARGET && TargetLead == lead)
+            {
+                TargetLead = null;
+                State = ShipState.IDLE;
+            }
+            else
+            {
+                Debug.Log($"Illegal state with target lead but not pursuing it!");
+            }
+        }
+
+		private void Start()
+		{
+            _targetingSystem.OnTargetLeadRemoved += OnTargetLeadRemoved;
+		}
+
+		private void OnDestroy()
+		{
+            _targetingSystem.OnTargetLeadRemoved -= OnTargetLeadRemoved;
 		}
 
 		private void Update()

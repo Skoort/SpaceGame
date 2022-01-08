@@ -10,6 +10,8 @@ namespace SpaceGame.Weapons.Projectiles
 
 		public Transform Target { get; set; }
 		public LayerMask HitLayer { get; set; }
+		public GameObject FiredBy { get; set; }
+		public Weapon WeaponInfo { get; set; }
 
 		protected override void OnTimeElapsed()
 		{

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7771406420908630996}
   - component: {fileID: 4387830455753471212}
   m_Layer: 0
-  m_Name: Tracer Round 1
+  m_Name: Tracer Round
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _speed: 300
+  _speed: 222
   _explosionPrefab: {fileID: 7796193806100696116, guid: 7570026ab154b4c4ea462fcd60edabf7, type: 3}
 --- !u!1 &7771406421244854830
 GameObject:

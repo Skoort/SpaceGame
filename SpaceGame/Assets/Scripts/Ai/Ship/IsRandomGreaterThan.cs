@@ -17,12 +17,12 @@ namespace SpaceGame.Ai.Ship
         {
             if (Random.Range(0, 100) > _percentChance)
             {
-                Debug.Log("Random is success");
+                //Debug.Log("Random is success");
                 return NodeState.SUCCESS;
             }
             else
             {
-                Debug.Log("Random is failure");
+                //Debug.Log("Random is failure");
                 return NodeState.FAILURE;
             }
         }

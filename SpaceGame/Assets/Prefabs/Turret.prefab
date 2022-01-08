@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 164b2143f574e194b830802ad68ce635, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,7 +93,10 @@ GameObject:
   - component: {fileID: 1899383752030231896}
   - component: {fileID: 1899383752030231898}
   - component: {fileID: 1899383752030231899}
-  m_Layer: 0
+  - component: {fileID: 313309977}
+  - component: {fileID: 313309978}
+  - component: {fileID: 6980785625262711215}
+  m_Layer: 8
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,16 +131,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 156c5f710695ce042aad0f8c79b06f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firingSystem: {fileID: 1899383752030231899}
+  FiringSystem: {fileID: 1899383752030231899}
+  Root: {fileID: 1899383752030231897}
+  PivotX: {fileID: 1899383753846785803}
+  PivotY: {fileID: 1899383753356808875}
+  TargetFrustumCenter: {fileID: 1899383753762167879}
+  MaxYawDelta: 100
+  MaxPitchDelta: 100
+  MaxRange: 1000
+  TurnSpeed: 150
+  CurrentPitch: 0
+  CurrentYaw: 0
   _targetingSystem: {fileID: 1899383752030231898}
-  _root: {fileID: 1899383753762167879}
-  _pivotX: {fileID: 1899383753846785803}
-  _pivotY: {fileID: 1899383753356808875}
-  _targetFrustumCenter: {fileID: 1899383753762167879}
-  _maxYawDelta: 40
-  _maxPitchDelta: 40
-  _maxRange: 100
-  _turnSpeed: 120
+  _manuallyAssignedLead: {fileID: 0}
+  _isTurretActive: 1
 --- !u!114 &1899383752030231898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,9 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4db96f21743f764e9f0395cffa5eee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetLayer:
-    serializedVersion: 2
-    m_Bits: 640
+  TargetTeams: 0100000002000000
   FiringSystem: {fileID: 1899383752030231899}
   LeadPrefab: {fileID: 6137145423697779669, guid: bd3684c804598104797f2318b22e2761, type: 3}
   Leads: []
@@ -179,6 +184,56 @@ MonoBehaviour:
     m_Bits: 1920
   IsShotReadyOnSwap: 1
   _nextShotInputLeeway: 0
+--- !u!114 &313309977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899383752030231894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47999a9996a5f6449be5a4e189901263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Team: 0
+  _rb: {fileID: 0}
+--- !u!114 &313309978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899383752030231894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12c4fa631a9d5645a0f224fad005cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currValue: 200
+  _maxValue: 200
+  _onChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!54 &6980785625262711215
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899383752030231894}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1899383752600208026
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +386,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 164b2143f574e194b830802ad68ce635, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -412,7 +467,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 164b2143f574e194b830802ad68ce635, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

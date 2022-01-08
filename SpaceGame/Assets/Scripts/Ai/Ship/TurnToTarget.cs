@@ -22,7 +22,7 @@ namespace SpaceGame.Ai.Ship
 
             var desiredDirection = _shipAi.TargetPosition.Value - _shipAi.Transform.position;
 
-            if (Mathf.Abs(Vector3.Angle(_shipAi.Transform.forward, desiredDirection)) < 10)
+            if (Mathf.Abs(Vector3.Angle(_shipAi.Transform.forward, desiredDirection)) < 5)
             {
                 return NodeState.SUCCESS;
             }

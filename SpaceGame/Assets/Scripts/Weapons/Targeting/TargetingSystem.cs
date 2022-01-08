@@ -10,7 +10,7 @@ namespace SpaceGame.Weapons.Targeting
 	// enemy that is within 25 degrees of the forward axis for X seconds.
 	public class TargetingSystem : MonoBehaviour
     {
-        [SerializeField] protected LayerMask TargetLayer = default;
+        [SerializeField] protected List<Team> TargetTeams = default;
         [SerializeField] protected FiringSystem FiringSystem = default;
         [SerializeField] protected TargetLead LeadPrefab = default;
 
@@ -46,7 +46,7 @@ namespace SpaceGame.Weapons.Targeting
             Leads = new List<TargetLead>();
             foreach (var target in GameManager.Instance.Targets)
             {
-                if (TargetLayer.Contains(target.gameObject.layer))
+                if (TargetTeams.Contains(target.Team))
                 {
                     OnTargetAdded(target);  // When you create a new targeting system you must add the targets that already existed.
                 }
@@ -70,7 +70,7 @@ namespace SpaceGame.Weapons.Targeting
 
         private void OnTargetAdded(Target target)
         {
-            if (TargetLayer.Contains(target.gameObject.layer))
+            if (TargetTeams.Contains(target.Team))
             { 
                 var lead = ObjectPool.Instance.RequestObject(LeadPrefab.ResourceName, LeadPrefab.gameObject).GetComponent<TargetLead>();
 		        lead.Target = target;
@@ -82,7 +82,7 @@ namespace SpaceGame.Weapons.Targeting
 
 	    private void OnTargetRemoved(Target target)
         {
-            if (TargetLayer.Contains(target.gameObject.layer))
+            if (TargetTeams.Contains(target.Team))
             {
                 var lead = Leads.Find(x => x.Target == target);
                 Leads.Remove(lead);

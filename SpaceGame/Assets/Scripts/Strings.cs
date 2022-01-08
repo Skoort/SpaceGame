@@ -10,5 +10,7 @@ namespace SpaceGame
         public const string MoveVertical = "Move Vertical";  // Space - Shift
         public const string MouseDeltaX = "Mouse X";
         public const string MouseDeltaY = "Mouse Y";
+
+        public const string PlayerTag = "Player";
     }
 }

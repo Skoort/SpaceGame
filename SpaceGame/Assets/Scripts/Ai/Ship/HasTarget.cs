@@ -17,12 +17,12 @@ namespace SpaceGame.Ai.Ship
 		{
             if (_shipAi.TargetPosition == null)
             {
-                Debug.Log("Has no target!");
+                //Debug.Log("Has no target!");
                 return NodeState.FAILURE;
             }
             else
             {
-                Debug.Log("Has a target!");
+                //Debug.Log("Has a target!");
                 return NodeState.SUCCESS;
             }
 		}
