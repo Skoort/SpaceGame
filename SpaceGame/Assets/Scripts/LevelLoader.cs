@@ -46,7 +46,8 @@ namespace SpaceGame
 		private void AssignHealth()
 		{
 			var currHealth = GameManager.Instance.State.PlayerHealth;
-			_playerHullIntegrity.SetValues(currHealth);
+			var maxPlayerHealth = GameManager.Instance.MaxPlayerHealth;
+			_playerHullIntegrity.SetValues(currHealth, maxPlayerHealth);
 		}
 
 		private void AssignMissiles()

@@ -118,7 +118,7 @@ namespace SpaceGame.Ui
              || buttonText == Strings.PurchaseMissiles3)
             {
                 var freeSpot = GameManager.Instance.State.GetFirstEmptyRocketIndex();
-                Debug.Assert(freeSpot > 0, "Attempted to add more missiles than there is room for!");
+                Debug.Assert(freeSpot >= 0, "Attempted to add more missiles than there is room for!");
                 GameManager.Instance.State.SetRocketState(freeSpot, true);
             }
             else

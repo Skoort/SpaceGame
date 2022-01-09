@@ -70,7 +70,7 @@ namespace SpaceGame
         public void SetValues(float value, float? maxValue = null)
         {
             _currValue = value;
-            if (_maxValue != null)
+            if (maxValue != null)
             { 
                 _maxValue = maxValue.Value;
             }

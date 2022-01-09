@@ -314,7 +314,7 @@ MonoBehaviour:
   _stationHullIntegrity: {fileID: 0}
   _state:
     _missionId: 0
-    _totalCredits: 0
+    _totalCredits: 600
     _creditsThisMission: 0
     _playerHealth: 100
     _stationHealth: 100
@@ -327,6 +327,7 @@ MonoBehaviour:
     _hasRocket2: 0
     _hasRocket3: 0
     _hangarState: 2
+  _maxPlayerHealth: 100
 --- !u!4 &359231855
 Transform:
   m_ObjectHideFlags: 0
