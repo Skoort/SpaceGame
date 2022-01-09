@@ -8,7 +8,7 @@ namespace SpaceGame.Ui
     {
 		[SerializeField] private PurchaseButton[] _weaponButtons = default;  // Upgrade 2/3/4 & "You already have this upgrade."
 		[SerializeField] private PurchaseButton[] _turretButtons = default;  // Upgrade Turret & "You already have this upgrade."
-		[SerializeField] private PurchaseButton _upgradeHealthButton = default;  // Heal health & "Hull fully restored."
+		[SerializeField] private PurchaseButton[] _upgradeHealthButtons = default;  // Heal health & "Hull fully restored."
 		[SerializeField] private PurchaseButton[] _purchaseMissilesButtons = default;  // Buy 1/3, 2/3, 3/3 & "You do not have any more capacity."
 
 		protected override void Start()
@@ -42,14 +42,14 @@ namespace SpaceGame.Ui
 
 		private void LoadHealth()
 		{
-			var _hasTurret = GameManager.State.PlayerHealth == GameManager.MaxPlayerHealth;
-			if (!_hasTurret)
+			var _hasFullHealth = GameManager.State.PlayerHealth == GameManager.MaxPlayerHealth;
+			if (!_hasFullHealth)
 			{
-				_turretButtons[0].gameObject.SetActive(true);
+				_upgradeHealthButtons[0].gameObject.SetActive(true);
 			}
 			else
 			{
-				_turretButtons[1].gameObject.SetActive(true);
+				_upgradeHealthButtons[1].gameObject.SetActive(true);
 			}
 		}
 

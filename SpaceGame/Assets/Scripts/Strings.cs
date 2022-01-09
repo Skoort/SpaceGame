@@ -22,6 +22,8 @@ namespace SpaceGame
         public const string Weapon4Upgrade = "Weapon 4";
         public const string TurretUpgrade = "Auto-Turret";
         public const string RepairHullDamageUpgrade = "Repair Hull Damage";
-        public const string PurchaseMissiles = "Missile";
+        public const string PurchaseMissiles1 = "Missiles (1/3)";
+        public const string PurchaseMissiles2 = "Missiles (2/3)";
+        public const string PurchaseMissiles3 = "Missiles (3/3)";
     }
 }

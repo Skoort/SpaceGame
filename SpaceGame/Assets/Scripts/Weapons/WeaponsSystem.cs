@@ -106,7 +106,7 @@ namespace SpaceGame.Weapons
             if (Input.GetKeyDown(KeyCode.R))
             {
                 Debug.Log("Shooting a rocket!");
-                var freeIndex = GameManager.Instance.State.GetFirstAvailableRocketIndex();
+                var freeIndex = GameManager.Instance.State.GetFirstEmptyRocketIndex();
                 if (freeIndex != -1)
                 {
                     var rocket = _rockets[freeIndex];

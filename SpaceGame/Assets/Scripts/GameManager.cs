@@ -56,27 +56,7 @@ namespace SpaceGame
         public bool HasRocket3 { get => _hasRocket3; set => _hasRocket3 = value; }
         public HangarArrivalState HangarState { get => _hangarState; set => _hangarState = value; }
 
-        public int GetFirstAvailableRocketIndex()
-        {
-            if (_hasRocket1)
-            {
-                return 0;
-            } else
-            if (_hasRocket2)
-            {
-                return 1;
-            } else
-            if (_hasRocket3)
-            {
-                return 2;
-            }
-            else
-            {
-                return -1;
-            }
-        }
-
-        public int GetFirstMissingRocketIndex(int i)
+        public int GetFirstEmptyRocketIndex()
         {
             if (!_hasRocket1)
             {
@@ -96,7 +76,27 @@ namespace SpaceGame
             }
         }
 
-        public void SetRocketState(int i, bool state)
+		public int GetFirstReadyRocketIndex()
+		{
+			if (_hasRocket1)
+			{
+				return 0;
+			} else
+			if (_hasRocket2)
+			{
+				return 1;
+			} else
+			if (_hasRocket3)
+			{
+				return 2;
+			}
+			else
+			{
+				return -1;
+			}
+		}
+
+		public void SetRocketState(int i, bool state)
         {
             if (i == 0)
             {

@@ -23,7 +23,7 @@ namespace SpaceGame.Ui
         {
             if (_isStub)
             {
-                _thisButton.enabled = true;
+                DisableButton();
             }
             else
             { 
@@ -43,20 +43,20 @@ namespace SpaceGame.Ui
 
         private void Refresh()
         {
-            if (_isStub && _thisButton.isActiveAndEnabled)
+            if (_isStub)
             {
                 DisableButton();
                 return;
             }
 
             var totalCredits = GameManager.Instance.State.TotalCredits;
-            if (totalCredits > _purchasePrice && _thisButton.isActiveAndEnabled)
-            {
-                DisableButton();
-            } else
-            if (totalCredits <= _purchasePrice && !_thisButton.isActiveAndEnabled)
+            if (totalCredits > _purchasePrice)
             {
                 EnableButton();
+            } else
+            if (totalCredits <= _purchasePrice)
+            {
+                DisableButton();
             }
         }
 
@@ -65,14 +65,14 @@ namespace SpaceGame.Ui
             _hoverText.gameObject.SetActive(true);
             _hoverText.text = _disabledText;
 
-            _thisButton.enabled = false;
+            _thisButton.interactable = false;
         }
 
         private void EnableButton()
         {
             _hoverText.gameObject.SetActive(false);
 
-            _thisButton.enabled = true;
+            _thisButton.interactable = true;
         }
 
 		public void Purchase()
@@ -112,6 +112,14 @@ namespace SpaceGame.Ui
             if (buttonText == Strings.RepairHullDamageUpgrade)
             {
                 GameManager.Instance.State.PlayerHealth = GameManager.Instance.MaxPlayerHealth;
+            } else
+            if (buttonText == Strings.PurchaseMissiles1 
+             || buttonText == Strings.PurchaseMissiles2 
+             || buttonText == Strings.PurchaseMissiles3)
+            {
+                var freeSpot = GameManager.Instance.State.GetFirstEmptyRocketIndex();
+                Debug.Assert(freeSpot > 0, "Attempted to add more missiles than there is room for!");
+                GameManager.Instance.State.SetRocketState(freeSpot, true);
             }
             else
             {
