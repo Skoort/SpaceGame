@@ -22,7 +22,20 @@ namespace SpaceGame.Hud
         {
             base.Show();
 
-            _distance.text = Mathf.FloorToInt(Vector3.Distance(TrackedObject.position, _playerTransform.position)).ToString();
+            var dirToTarget = TrackedObject.position - _playerTransform.position;
+
+            var angle = Mathf.Abs(Vector3.Angle(transform.forward, dirToTarget));
+            if (GraphicsRoot.gameObject.activeInHierarchy && angle > 90)
+            {
+                GraphicsRoot.gameObject.SetActive(false);
+                return;
+            } else
+            if (!GraphicsRoot.gameObject.activeInHierarchy && angle < 90)
+            {
+                GraphicsRoot.gameObject.SetActive(true);
+            }
+
+            _distance.text = Mathf.FloorToInt(dirToTarget.magnitude).ToString();
 			_distance.color = Color;
 
 			_image.color = Color;

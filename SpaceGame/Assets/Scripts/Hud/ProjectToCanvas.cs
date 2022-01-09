@@ -11,7 +11,8 @@ namespace SpaceGame.Hud
 {
     public class ProjectToCanvas : MonoBehaviour
     {
-        [SerializeField] private RectTransform _elementRoot = default;
+        [SerializeField] protected RectTransform ElementRoot = default;
+        [SerializeField] protected RectTransform GraphicsRoot = default;
         public Camera Camera { get; set; }
         public Canvas Canvas { get; set; }
         public RectTransform CanvasRect { get; set; }
@@ -36,7 +37,7 @@ namespace SpaceGame.Hud
                     : Camera,
                 out var newPos);
 
-            _elementRoot.anchoredPosition = newPos;
+            ElementRoot.anchoredPosition = newPos;
         }
     }
 }

@@ -957,6 +957,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5439510573593680652, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5439510573593680652, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5439510573593680652, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 5439510573593680653, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
       propertyPath: _mainGun
       value: 
@@ -1021,6 +1033,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hero's Ship
       objectReference: {fileID: 0}
+    - target: {fileID: 5439510574229148384, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
+      propertyPath: TargetTeams.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5439510574229148384, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
+      propertyPath: TargetTeams.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5439510574229148384, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
+      propertyPath: TargetTeams.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5439510574229148399, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
       propertyPath: _targetLead
       value: 
@@ -1028,7 +1052,7 @@ PrefabInstance:
     - target: {fileID: 5439510575035858416, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
       propertyPath: _camera
       value: 
-      objectReference: {fileID: 1888626704}
+      objectReference: {fileID: 1888626705}
     - target: {fileID: 5439510575035858416, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
       propertyPath: _canvas
       value: 
@@ -1111,9 +1135,9 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5439510574229148387, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
   m_PrefabInstance: {fileID: 1888626698}
   m_PrefabAsset: {fileID: 0}
---- !u!20 &1888626704 stripped
+--- !u!20 &1888626705 stripped
 Camera:
-  m_CorrespondingSourceObject: {fileID: 5439510574727857908, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2506350332264766217, guid: 65a147c1a8ec6144f842321f0e721cfa, type: 3}
   m_PrefabInstance: {fileID: 1888626698}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1918301907
@@ -1241,8 +1265,8 @@ Canvas:
   m_GameObject: {fileID: 2077333475}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1888626705}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1

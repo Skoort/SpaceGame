@@ -120,7 +120,8 @@ namespace SpaceGame.Weapons
             } else
             if (Input.GetKeyDown(KeyCode.R))
             {
-                Debug.Log("Shooting a rocket!");       
+                Debug.Log("Shooting a rocket!");
+                _currentWeapon?.Reload();
             }
         }
     }
