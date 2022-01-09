@@ -66,7 +66,7 @@ namespace SpaceGame
                 var ray2 = new Ray(origin.position, origin.forward);
                 if (Physics.Raycast(ray2, out var hitInfo2, _distFromMouseCapturePlane, _mouseCaptureLayer.value, QueryTriggerInteraction.Collide))
                 {
-                    _targetLeadMouse.position = hitInfo2.point;
+                    _targetLeadCurrentAim.position = hitInfo2.point;
                     Debug.DrawLine(ray.origin, hitInfo2.point, Color.yellow);
                 }
             }

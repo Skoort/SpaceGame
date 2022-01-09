@@ -7,6 +7,7 @@ namespace SpaceGame
 {
 	public class LevelLoader : MonoBehaviour
     {
+		[SerializeField] private Spaceship _playerSpaceshipComponent = default;
 		[SerializeField] private HullIntegrity _playerHullIntegrity = default;
 		[SerializeField] private WeaponsSystem _playerWeaponsSystem = default;
 		[SerializeField] private FiringSystem[] _weapons = default;
@@ -31,8 +32,9 @@ namespace SpaceGame
 
 		private void AssignWeapon()
 		{
-			var weaponId = (int)GameManager.Instance.State.WeaponUpgrade;
-			_playerWeaponsSystem.AssignWeapon(_weapons[weaponId]);
+			var weapon = _weapons[(int)GameManager.Instance.State.WeaponUpgrade];
+			_playerWeaponsSystem.AssignWeapon(weapon);
+			_playerSpaceshipComponent.AssignGun(weapon);
 		}
 
 		private void AssignRobot()
