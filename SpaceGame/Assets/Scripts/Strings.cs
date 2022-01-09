@@ -12,5 +12,8 @@ namespace SpaceGame
         public const string MouseDeltaY = "Mouse Y (Rotate)";
 
         public const string PlayerTag = "Player";
+        public const string HumanTag = "Human";
+        public const string AlienTag = "Alien";
+        public const string SpaceStationTag = "Station";
     }
 }

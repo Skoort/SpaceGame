@@ -11,10 +11,8 @@ namespace SpaceGame.Weapons
         //[SerializeField] private TextMeshPro _ammoLabel = default;
 
         [SerializeField] private HullIntegrity _hullIntegrity = default;
-        [SerializeField] private GameObject _weapon1 = default;
-        [SerializeField] private GameObject _weapon2 = default;
-        [SerializeField] private GameObject _weapon3 = default;
-        [SerializeField] private GameObject _weapon4 = default;
+        [SerializeField] private FiringSystem[] _weapons = default;
+        [SerializeField] private FiringSystem[] _rockets = default;
 
         private FiringSystem _currentWeapon;
         private TargetingSystem _currentTargetingSystem;
@@ -33,15 +31,6 @@ namespace SpaceGame.Weapons
         [SerializeField] private Canvas _canvas = default;
         [SerializeField] private RectTransform _canvasRect = default;
         [SerializeField] private Camera _camera = default;
-
-        private void CreateLeadsHud()
-        {
-            _leadToHudMap = new Dictionary<TargetLead, LeadUi>();
-            foreach (var lead in _currentTargetingSystem.Leads)
-            {
-                OnTargetLeadAdded(lead);
-            }
-        }
 
         private ProjectToCanvas ProjectObjectToCanvas(ProjectToCanvas prefab, Transform trackedObject, Color color)
         {
@@ -92,22 +81,18 @@ namespace SpaceGame.Weapons
 
         private void Awake()
         {
-            _currentWeapon = _weapon1.GetComponent<FiringSystem>();
-            _currentTargetingSystem = _weapon1.GetComponent<TargetingSystem>();
-        }
-
-		private void Start()
-		{
-            _currentTargetingSystem.OnTargetLeadAdded += OnTargetLeadAdded;
-            _currentTargetingSystem.OnTargetLeadRemoved += OnTargetLeadRemoved;    
-
-            CreateLeadsHud();
-            //_targetLeadMouseHud = ProjectObjectToCanvas(_targetLeadMouseHudPrefab, _targetLeadMouse, Color.white);
+            _leadToHudMap = new Dictionary<TargetLead, LeadUi>();
             _targetLeadAimHud = ProjectObjectToCanvas(_targetLeadAimHudPrefab, _targetLeadAim, Color.white);
         }
 
 		private void Update()
         {
+            if (_currentWeapon == null)
+            {
+                Debug.Log("WeaponsSystem has no weapon!");
+                return;
+            }
+            
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 Debug.Log("Started shooting!");
@@ -121,8 +106,36 @@ namespace SpaceGame.Weapons
             if (Input.GetKeyDown(KeyCode.R))
             {
                 Debug.Log("Shooting a rocket!");
-                _currentWeapon?.Reload();
+                var freeIndex = GameManager.Instance.State.GetFirstAvailableRocketIndex();
+                if (freeIndex != -1)
+                {
+                    var rocket = _rockets[freeIndex];
+                    if (!rocket.gameObject.activeInHierarchy)
+                    {
+                        Debug.LogError($"Rocket {freeIndex} is disabled but GameManager says it is available!");
+                        return;
+                    }
+                    rocket.Fire();
+                    rocket.gameObject.SetActive(false);
+                    GameManager.Instance.State.SetRocketState(freeIndex, false);
+                }
             }
+        }
+
+        public void AssignWeapon(FiringSystem weapon)
+        {
+            _currentTargetingSystem = weapon.transform.GetComponent<TargetingSystem>();
+            _currentTargetingSystem.OnTargetLeadAdded += OnTargetLeadAdded;
+            _currentTargetingSystem.OnTargetLeadRemoved += OnTargetLeadRemoved;
+
+            _currentWeapon = weapon;
+            _currentWeapon.gameObject.SetActive(true);
+        }
+
+        public void AssignTargetLeadAim(Transform targetLeadAim)
+        {
+            _targetLeadAim = targetLeadAim;
+            _targetLeadAimHud = ProjectObjectToCanvas(_targetLeadAimHudPrefab, _targetLeadAim, Color.white);
         }
     }
 }

@@ -38,7 +38,12 @@ namespace SpaceGame.Weapons
 
         [SerializeField] private float _nextShotInputLeeway = 0;
 
-        public void Fire()
+		private void Awake()
+		{
+            Ammo = _weapon.MaxAmmo;
+		}
+
+		public void Fire()
         {
             if (IsReloading)
             {

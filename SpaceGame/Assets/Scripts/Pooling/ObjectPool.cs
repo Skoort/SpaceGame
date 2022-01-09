@@ -68,5 +68,14 @@ namespace SpaceGame.Pooling
             myObject.ResetTimer();
             queue.Enqueue(myObject.InstanceObject);
         }
+
+        public void DoCleanup()
+        {
+            foreach (Transform child in transform)
+            {
+				Destroy(child.gameObject);
+            }
+            _availableObjects.Clear();
+        }
     }
 }

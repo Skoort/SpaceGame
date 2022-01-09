@@ -24,7 +24,6 @@ namespace SpaceGame
         private float _currentStrafe;
         private float _currentUpDown;
         private float _currentRoll;
-        private Vector2 _currentPitchYaw;
 
         [SerializeField] private Camera _camera = default;
         [SerializeField] private LayerMask _mouseCaptureLayer = default;
@@ -34,7 +33,7 @@ namespace SpaceGame
         
         [SerializeField] private AnimationCurve _turnStrengthCurve = default;
 
-        [SerializeField] private FiringSystem _mainGun = default;
+        private FiringSystem _mainGun = default;
 
 		private void Awake()
 		{
@@ -61,12 +60,15 @@ namespace SpaceGame
                 Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
             }
 
-            var origin = _mainGun.GetOrigin(0);
-            var ray2 = new Ray(origin.position, origin.forward);
-            if (Physics.Raycast(ray2, out var hitInfo2, _distFromMouseCapturePlane, _mouseCaptureLayer.value, QueryTriggerInteraction.Collide))
-            {
-                _targetLeadMouse.position = hitInfo.point;
-                Debug.DrawLine(ray.origin, hitInfo.point, Color.yellow);
+            if (_mainGun != null)
+            { 
+                var origin = _mainGun.GetOrigin(0);
+                var ray2 = new Ray(origin.position, origin.forward);
+                if (Physics.Raycast(ray2, out var hitInfo2, _distFromMouseCapturePlane, _mouseCaptureLayer.value, QueryTriggerInteraction.Collide))
+                {
+                    _targetLeadMouse.position = hitInfo2.point;
+                    Debug.DrawLine(ray.origin, hitInfo2.point, Color.yellow);
+                }
             }
         }
 
@@ -170,6 +172,11 @@ namespace SpaceGame
             {
                 _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, _maxVelocity);
             }
+        }
+
+        public void AssignGun(FiringSystem gun)
+        {
+            _mainGun = gun;
         }
 	}
 }
