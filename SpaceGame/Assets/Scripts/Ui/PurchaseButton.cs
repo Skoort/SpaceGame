@@ -8,16 +8,16 @@ namespace SpaceGame.Ui
     {
         [SerializeField] private HangarTalkToGM _hangarUiMaster = default;
 
-        [SerializeField] private Button _thisButton = default;
-        [SerializeField] private PurchaseButton _nextUpgrade = default;
         [SerializeField] private int _purchasePrice = 100;
+        [SerializeField] private string _currentName = "Current Name";
+        [SerializeField] private string _upgradeName = "Upgrade Name";
 
-        [SerializeField] private TextMeshProUGUI _hoverText = default;
-        [SerializeField] private TextMeshProUGUI _buttonText = default;
-        [SerializeField] private string _disabledText = "Insufficient Funds";  // Either "Insufficient Funds" or "Already Unlocked".
-        [SerializeField] private string _onHoverText = "Purchase";
+        [SerializeField] private Button _thisButton = default;
+        [SerializeField] private TextMeshProUGUI _upgradeInfoText = default;
+        [SerializeField] private TextMeshProUGUI _weaponNameText = default;
 
         [SerializeField] private bool _isStub = false;
+        [SerializeField] private PurchaseButton _nextUpgrade = default;
 
         private void OnEnable()
         {
@@ -43,6 +43,13 @@ namespace SpaceGame.Ui
 
         private void Refresh()
         {
+            if (_weaponNameText != null)
+            { 
+                _weaponNameText.text = _currentName;
+            }
+
+            _upgradeInfoText.text = $"${_purchasePrice} {_upgradeName}";
+            
             if (_isStub)
             {
                 DisableButton();
@@ -62,17 +69,21 @@ namespace SpaceGame.Ui
 
         private void DisableButton()
         {
-            _hoverText.gameObject.SetActive(true);
-            _hoverText.text = _disabledText;
-
-            _thisButton.interactable = false;
+            if (_isStub)
+            {
+                _thisButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                _upgradeInfoText.color = Color.red;
+                _thisButton.interactable = false;
+            }
         }
 
         private void EnableButton()
         {
-            _hoverText.gameObject.SetActive(false);
-
             _thisButton.interactable = true;
+            _upgradeInfoText.color = Color.black;
         }
 
 		public void Purchase()
@@ -92,30 +103,27 @@ namespace SpaceGame.Ui
 
         protected void DoUpgrade()
         {
-            var buttonText = _buttonText.text;
-            if (buttonText == Strings.Weapon2Upgrade)
+            if (_upgradeName == Strings.Weapon2Upgrade)
             {
                 GameManager.Instance.State.WeaponUpgrade = GameState.WeaponUpgradeState.WEAPON2;
             } else
-            if (buttonText == Strings.Weapon3Upgrade)
+            if (_upgradeName == Strings.Weapon3Upgrade)
             {
                 GameManager.Instance.State.WeaponUpgrade = GameState.WeaponUpgradeState.WEAPON3;
             } else
-            if (buttonText == Strings.Weapon4Upgrade)
+            if (_upgradeName == Strings.Weapon4Upgrade)
             {
                 GameManager.Instance.State.WeaponUpgrade = GameState.WeaponUpgradeState.WEAPON4;
             } else
-            if (buttonText == Strings.TurretUpgrade)
+            if (_upgradeName == Strings.TurretUpgrade)
             {
                 GameManager.Instance.State.HasTurret = true;
             } else
-            if (buttonText == Strings.RepairHullDamageUpgrade)
+            if (_upgradeName == Strings.RepairHullDamageUpgrade)
             {
                 GameManager.Instance.State.PlayerHealth = GameManager.Instance.MaxPlayerHealth;
             } else
-            if (buttonText == Strings.PurchaseMissiles1 
-             || buttonText == Strings.PurchaseMissiles2 
-             || buttonText == Strings.PurchaseMissiles3)
+            if (_upgradeName == Strings.PurchaseMissile)
             {
                 var freeSpot = GameManager.Instance.State.GetFirstEmptyRocketIndex();
                 Debug.Assert(freeSpot >= 0, "Attempted to add more missiles than there is room for!");
@@ -123,7 +131,7 @@ namespace SpaceGame.Ui
             }
             else
             {
-                Debug.LogError($"Made a purchase but couldn't find upgrade called {buttonText}!");
+                Debug.LogError($"Made a purchase but couldn't find upgrade called {_upgradeName}!");
             }
         }
 	}

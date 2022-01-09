@@ -5,13 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test Scenes/Level Tests/TestMenu.unity
     guid: 3a80d750900f64847bf268c6bb84e604
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test Scenes/Level Tests/TestHangar.unity
     guid: 29cf9581b04ebbc4fad67431577452c0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test Scenes/Level Tests/TestMission 1.unity
     guid: 5c1e44b66e6135f4dbb7506fca8849f2
+  - enabled: 1
+    path: Assets/Scenes/Final Scenes/Main Menu.unity
+    guid: 3f47a0f5564d12e448682438baa87a61
+  - enabled: 1
+    path: Assets/Scenes/Final Scenes/Hangar.unity
+    guid: 3c06b8e0855512c4b864cb16ab8df2ba
+  - enabled: 1
+    path: Assets/Scenes/Final Scenes/Mission 1.unity
+    guid: 4b714b0ad7cb28c4c8fb18d8d4e5d2f2
   m_configObjects: {}

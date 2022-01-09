@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,10 @@ namespace SpaceGame.Ui
 		[SerializeField] private PurchaseButton[] _upgradeHealthButtons = default;  // Heal health & "Hull fully restored."
 		[SerializeField] private PurchaseButton[] _purchaseMissilesButtons = default;  // Buy 1/3, 2/3, 3/3 & "You do not have any more capacity."
 
+		[SerializeField] private TextMeshProUGUI _creditsLabel = default;
+		[SerializeField] private TextMeshProUGUI _healthLabel = default;
+		[SerializeField] private TextMeshProUGUI _missilesLabel = default;
+
 		protected override void Start()
 		{
 			base.Start();
@@ -19,6 +24,10 @@ namespace SpaceGame.Ui
 			LoadTurret();
 			LoadHealth();
 			LoadRockets();
+
+			_creditsLabel.text = $"${GameManager.State.TotalCredits}";
+			_healthLabel.text = $"{GameManager.State.PlayerHealth}%";
+			_missilesLabel.text = GameManager.State.GetNumberOfRockets().ToString();
 		}
 
 		private void LoadWeapons()
@@ -63,6 +72,10 @@ namespace SpaceGame.Ui
 		public void MakePurchase()
 		{
 			OnPurchaseMade?.Invoke();
+
+			_creditsLabel.text = $"${GameManager.State.TotalCredits}";
+			_healthLabel.text = $"{GameManager.State.PlayerHealth}%";
+			_missilesLabel.text = GameManager.State.GetNumberOfRockets().ToString();
 		}
 
 		public event Action OnPurchaseMade;

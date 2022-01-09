@@ -11,7 +11,6 @@ namespace SpaceGame.Weapons
         //[SerializeField] private TextMeshPro _ammoLabel = default;
 
         [SerializeField] private HullIntegrity _hullIntegrity = default;
-        [SerializeField] private FiringSystem[] _weapons = default;
         [SerializeField] private FiringSystem[] _rockets = default;
 
         private FiringSystem _currentWeapon;

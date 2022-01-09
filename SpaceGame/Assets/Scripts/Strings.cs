@@ -16,14 +16,12 @@ namespace SpaceGame
         public const string AlienTag = "Alien";
         public const string SpaceStationTag = "Station";
 
-        public const string Weapon1Upgrade = "Weapon 1";
-        public const string Weapon2Upgrade = "Weapon 2";
-        public const string Weapon3Upgrade = "Weapon 3";
-        public const string Weapon4Upgrade = "Weapon 4";
+        public const string Weapon1Upgrade = "22mm Cannon";
+        public const string Weapon2Upgrade = "25mm Cannon";
+        public const string Weapon3Upgrade = "50mm Cannon";
+        public const string Weapon4Upgrade = "The Destroyer";
         public const string TurretUpgrade = "Auto-Turret";
-        public const string RepairHullDamageUpgrade = "Repair Hull Damage";
-        public const string PurchaseMissiles1 = "Missiles (1/3)";
-        public const string PurchaseMissiles2 = "Missiles (2/3)";
-        public const string PurchaseMissiles3 = "Missiles (3/3)";
+        public const string RepairHullDamageUpgrade = "Repair";
+        public const string PurchaseMissile = "Missile";
     }
 }

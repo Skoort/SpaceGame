@@ -29,7 +29,7 @@ namespace SpaceGame
         [SerializeField] private int _missionId = 0;
         [SerializeField] private int _totalCredits = 0;
         [SerializeField] private int _creditsThisMission = 0;
-        [SerializeField] private float _playerHealth = 0;
+        [SerializeField] private float _playerHealth = 500;
         [SerializeField] private float _stationHealth = 0;
         [SerializeField] private int _playerEnemyKillCount = 0;
         [SerializeField] private int _playerAllyKillCount = 0;
@@ -122,11 +122,11 @@ namespace SpaceGame
             if (_hasRocket1)
             {
                 ++sum;
-            } else
+            }
             if (_hasRocket2)
             {
                 ++sum;
-            } else
+            }
             if (_hasRocket3)
             {
                 ++sum;
@@ -172,7 +172,7 @@ namespace SpaceGame
         [SerializeField] private GameState _state = default;
         public GameState State => _state;
 
-        [SerializeField] public float _maxPlayerHealth = 100;
+        [SerializeField] public float _maxPlayerHealth = 500;
         public float MaxPlayerHealth => _maxPlayerHealth;
 
         public void OnPlayerHealthChanged()
@@ -240,12 +240,14 @@ namespace SpaceGame
         private bool _savedHasRocket1;
         private bool _savedHasRocket2;
         private bool _savedHasRocket3;
+        private int _savedMissionId;
         public void LoadHangarGameOver()
         {
             State.PlayerHealth = _savedPlayerHealth;
             State.HasRocket1 = _savedHasRocket1;
             State.HasRocket2 = _savedHasRocket2;
             State.HasRocket3 = _savedHasRocket3;
+            State.MissionId = _savedMissionId;
 
             State.HangarState = GameState.HangarArrivalState.FAILURE;
 
@@ -276,6 +278,7 @@ namespace SpaceGame
             _savedHasRocket1 = State.HasRocket1;
             _savedHasRocket2 = State.HasRocket2;
             _savedHasRocket3 = State.HasRocket3;
+            _savedMissionId = State.MissionId;
 
             State.MissionId = index;
 
