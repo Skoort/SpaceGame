@@ -25,7 +25,7 @@ namespace SpaceGame
                 _onDeath?.Invoke();
                 if (source.tag == Strings.PlayerTag)
                 {
-                    GameManager.Instance.OnPlayerGotKill();
+                    GameManager.Instance.IncrementPlayerKillCount();
                 }
                 Destroy(this.gameObject);
             }
