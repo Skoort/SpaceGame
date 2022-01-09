@@ -1,15 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using SpaceGame;
-using SpaceGame.Pooling;
-using SpaceGame.Weapons.Targeting;
 
 namespace SpaceGame.Hud
 {
-    public class ProjectToCanvas : MonoBehaviour
+	public class ProjectToCanvas : MonoBehaviour
     {
         [SerializeField] protected RectTransform ElementRoot = default;
         [SerializeField] protected RectTransform GraphicsRoot = default;

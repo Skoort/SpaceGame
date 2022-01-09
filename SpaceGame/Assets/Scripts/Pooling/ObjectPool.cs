@@ -20,7 +20,7 @@ namespace SpaceGame.Pooling
             else
             {
                 Debug.LogError($"Attempted to make another ObjectPool instance {this.name}!");
-                Destroy(this);
+                Destroy(this.transform.root.gameObject);
             }
         }
 

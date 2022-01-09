@@ -20,8 +20,6 @@ namespace SpaceGame
 		{
 			GameManager.Instance.SetNumberAliens(GameObject.FindObjectsOfType<Target>().Where(x => x.Team == Team.ALIENS).Count());
 
-			//_playerWeaponsSystem.AssignTargetLeadAim(
-
 			AssignWeapon();
 			AssignRobot();
 			AssignHealth();

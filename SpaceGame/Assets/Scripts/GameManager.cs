@@ -115,6 +115,25 @@ namespace SpaceGame
                 Debug.LogError($"Attempted to assign to an invalid rocket index {i}!");
             }
         }
+
+        public int GetNumberOfRockets()
+        {
+            int sum = 0;
+            if (_hasRocket1)
+            {
+                ++sum;
+            } else
+            if (_hasRocket2)
+            {
+                ++sum;
+            } else
+            if (_hasRocket3)
+            {
+                ++sum;
+            }
+
+            return sum;
+        }
     }
 
 	public class GameManager : MonoBehaviour
@@ -134,7 +153,7 @@ namespace SpaceGame
             else
             {
                 Debug.LogError($"Attempted to make another GameManager instance {this.name}!");
-                Destroy(this);
+                Destroy(this.transform.root.gameObject);
             }
         }
 
@@ -152,6 +171,9 @@ namespace SpaceGame
 
         [SerializeField] private GameState _state = default;
         public GameState State => _state;
+
+        [SerializeField] public float _maxPlayerHealth = 100;
+        public float MaxPlayerHealth => _maxPlayerHealth;
 
         public void OnPlayerHealthChanged()
         {
@@ -237,6 +259,13 @@ namespace SpaceGame
             State.HangarState = GameState.HangarArrivalState.SUCCESS;
 
             // Screen fade to hangar. Shows text "SUCCESS".
+
+            LoadLevel(_hangarSceneName);
+        }
+
+        public void LoadHangarFromMenu()
+        {
+            State.HangarState = GameState.HangarArrivalState.MENU;
 
             LoadLevel(_hangarSceneName);
         }

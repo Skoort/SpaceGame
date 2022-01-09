@@ -15,5 +15,13 @@ namespace SpaceGame
         public const string HumanTag = "Human";
         public const string AlienTag = "Alien";
         public const string SpaceStationTag = "Station";
+
+        public const string Weapon1Upgrade = "Weapon 1";
+        public const string Weapon2Upgrade = "Weapon 2";
+        public const string Weapon3Upgrade = "Weapon 3";
+        public const string Weapon4Upgrade = "Weapon 4";
+        public const string TurretUpgrade = "Auto-Turret";
+        public const string RepairHullDamageUpgrade = "Repair Hull Damage";
+        public const string PurchaseMissiles = "Missile";
     }
 }

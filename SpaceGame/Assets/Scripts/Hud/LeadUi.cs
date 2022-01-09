@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using SpaceGame;
-using SpaceGame.Pooling;
-using SpaceGame.Weapons.Targeting;
 
 namespace SpaceGame.Hud
-{ 
-    public class LeadUi : ProjectToCanvas
+{
+	public class LeadUi : ProjectToCanvas
     {
         [SerializeField] private TextMeshProUGUI _distance = default;
         [SerializeField] private Image _image = default;
