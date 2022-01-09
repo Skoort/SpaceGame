@@ -132,5 +132,10 @@ namespace SpaceGame.Weapons
         {
             StopFiring();
         }
+
+        public Transform GetOrigin(int index)
+        {
+            return Origins[index];
+        }
     }
 }

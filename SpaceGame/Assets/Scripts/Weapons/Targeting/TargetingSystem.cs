@@ -57,7 +57,7 @@ namespace SpaceGame.Weapons.Targeting
             GameManager.Instance.OnTargetRemoved += OnTargetRemoved;
         }
 
-        protected void LateUpdate()
+        private void LateUpdate()
         {
             PositionLeads();
         }

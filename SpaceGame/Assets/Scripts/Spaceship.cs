@@ -1,3 +1,4 @@
+using SpaceGame.Weapons;
 using UnityEngine;
 
 namespace SpaceGame
@@ -29,8 +30,11 @@ namespace SpaceGame
         [SerializeField] private LayerMask _mouseCaptureLayer = default;
         [SerializeField] private float _distFromMouseCapturePlane = 100;
         [SerializeField] private Transform _targetLeadMouse = default;
-
+        [SerializeField] private Transform _targetLeadCurrentAim = default;
+        
         [SerializeField] private AnimationCurve _turnStrengthCurve = default;
+
+        [SerializeField] private FiringSystem _mainGun = default;
 
 		private void Awake()
 		{
@@ -55,6 +59,14 @@ namespace SpaceGame
             {
                 _targetLeadMouse.position = hitInfo.point;
                 Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
+            }
+
+            var origin = _mainGun.GetOrigin(0);
+            var ray2 = new Ray(origin.position, origin.forward);
+            if (Physics.Raycast(ray2, out var hitInfo2, _distFromMouseCapturePlane, _mouseCaptureLayer.value, QueryTriggerInteraction.Collide))
+            {
+                _targetLeadMouse.position = hitInfo.point;
+                Debug.DrawLine(ray.origin, hitInfo.point, Color.yellow);
             }
         }
 

@@ -19,16 +19,20 @@ namespace SpaceGame.Weapons
         private FiringSystem _currentWeapon;
         private TargetingSystem _currentTargetingSystem;
 
-        private Dictionary<Compartment, FiringSystem> _weaponsByCompartment;
+        [SerializeField] private Transform _targetLeadMouse = default;
+        [SerializeField] private Transform _targetLeadAim = default;
 
+        [SerializeField] private ProjectToCanvas _targetLeadMouseHudPrefab = default;
+        [SerializeField] private ProjectToCanvas _targetLeadAimHudPrefab = default;
+        [SerializeField] private LeadUi _targetLeadHudPrefab = default;
 
-        [SerializeField] private TargetLead _targetLeadMouse = default;
-
-        [SerializeField] private LeadUi _leadHudElementPrefab = default;
+        private ProjectToCanvas _targetLeadMouseHud;
+        private ProjectToCanvas _targetLeadAimHud;
         private Dictionary<TargetLead, LeadUi> _leadToHudMap;
-        [SerializeField] private Canvas _canvas;
-        [SerializeField] private Camera _camera;
-        private Vector2 _uiOffset;
+
+        [SerializeField] private Canvas _canvas = default;
+        [SerializeField] private RectTransform _canvasRect = default;
+        [SerializeField] private Camera _camera = default;
 
         private void CreateLeadsHud()
         {
@@ -39,20 +43,31 @@ namespace SpaceGame.Weapons
             }
         }
 
+        private ProjectToCanvas ProjectObjectToCanvas(ProjectToCanvas prefab, Transform trackedObject, Color color)
+        {
+            var elem = Instantiate<ProjectToCanvas>(prefab, _canvas.transform);
+            elem.Camera = _camera;
+            elem.Canvas = _canvas;
+            elem.CanvasRect = _canvasRect;
+            elem.TrackedObject = trackedObject;
+            elem.Color = color;
+
+            return elem;
+        }
+
         private void CreateLeadHud(TargetLead lead)
         {
             if (!_leadToHudMap.ContainsKey(lead))
             {
-                var elem = ObjectPool.Instance.RequestObject(
-                    _leadHudElementPrefab.ResourceName,
-                    _leadHudElementPrefab.gameObject,
-                    desiredParent: _canvas.transform
-                    ).GetComponent<LeadUi>();
+                var elem = Instantiate<LeadUi>(_targetLeadHudPrefab, _canvas.transform);
                 elem.Camera = _camera;
                 elem.Canvas = _canvas;
-                elem.CanvasRect = _canvas.GetComponent<RectTransform>();
-                elem.TargetLead = lead;
-                elem.SetTeam(lead.Target.Team);
+                elem.CanvasRect = _canvasRect;
+                elem.TrackedObject = lead.transform;
+                if (lead.Target != null)
+                { 
+                    elem.SetTeam(lead.Target.Team);
+                }
                 elem.SetPlayerTransform(this.transform);
                 elem.SetHullIntegrity(_hullIntegrity);
                 elem.Show();
@@ -87,7 +102,9 @@ namespace SpaceGame.Weapons
             _currentTargetingSystem.OnTargetLeadRemoved += OnTargetLeadRemoved;    
 
             CreateLeadsHud();
-		}
+            //_targetLeadMouseHud = ProjectObjectToCanvas(_targetLeadMouseHudPrefab, _targetLeadMouse, Color.white);
+            _targetLeadAimHud = ProjectObjectToCanvas(_targetLeadAimHudPrefab, _targetLeadAim, Color.white);
+        }
 
 		private void Update()
         {
