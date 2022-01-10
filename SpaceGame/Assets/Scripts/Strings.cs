@@ -23,5 +23,8 @@ namespace SpaceGame
         public const string TurretUpgrade = "Auto-Turret";
         public const string RepairHullDamageUpgrade = "Repair";
         public const string PurchaseMissile = "Missile";
+
+        public const string SceneTransitionTrigger = "IsTriggered";
+        public const string SceneTransitionReset = "IsReset";
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SpaceGame.Ui
 {
-	public class TalkToGM : MonoBehaviour
+    public class TalkToGM : MonoBehaviour
     {
         public GameManager GameManager { get; set; }
 
@@ -24,6 +24,11 @@ namespace SpaceGame.Ui
         public void LoadMainMenu()
         {
             GameManager.LoadMainMenu();
+        }
+
+        public void OnScreenFadedToBlack()
+        {
+            GameManager.OnScreenFadedToBlack();
         }
 
         public void Quit()

@@ -26,7 +26,7 @@ namespace SpaceGame.Ui
 			LoadRockets();
 
 			_creditsLabel.text = $"${GameManager.State.TotalCredits}";
-			_healthLabel.text = $"{GameManager.State.PlayerHealth}%";
+			_healthLabel.text = $"{Mathf.FloorToInt(GameManager.State.PlayerHealth / GameManager.MaxPlayerHealth * 100)}%";
 			_missilesLabel.text = GameManager.State.GetNumberOfRockets().ToString();
 		}
 
@@ -74,7 +74,7 @@ namespace SpaceGame.Ui
 			OnPurchaseMade?.Invoke();
 
 			_creditsLabel.text = $"${GameManager.State.TotalCredits}";
-			_healthLabel.text = $"{GameManager.State.PlayerHealth}%";
+			_healthLabel.text = $"{Mathf.FloorToInt(GameManager.State.PlayerHealth / GameManager.MaxPlayerHealth * 100)}%";
 			_missilesLabel.text = GameManager.State.GetNumberOfRockets().ToString();
 		}
 

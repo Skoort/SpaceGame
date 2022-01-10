@@ -20,6 +20,15 @@ namespace SpaceGame
 		{
 			GameManager.Instance.SetNumberAliens(GameObject.FindObjectsOfType<Target>().Where(x => x.Team == Team.ALIENS).Count());
 
+			if (_playerHullIntegrity != null)
+			{
+				GameManager.Instance.SetPlayerHullIntegrity(_playerHullIntegrity);
+			}
+			if (_stationHullIntegrity != null)
+			{
+				GameManager.Instance.SetStationHullIntegrity(_stationHullIntegrity);
+			}
+
 			AssignWeapon();
 			AssignRobot();
 			AssignHealth();

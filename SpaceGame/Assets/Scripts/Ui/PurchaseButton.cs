@@ -21,6 +21,11 @@ namespace SpaceGame.Ui
 
         private void OnEnable()
         {
+            if (_weaponNameText != null)
+            { 
+                _weaponNameText.text = _currentName;
+            }
+
             if (_isStub)
             {
                 DisableButton();
@@ -43,11 +48,6 @@ namespace SpaceGame.Ui
 
         private void Refresh()
         {
-            if (_weaponNameText != null)
-            { 
-                _weaponNameText.text = _currentName;
-            }
-
             _upgradeInfoText.text = $"${_purchasePrice} {_upgradeName}";
             
             if (_isStub)
@@ -57,11 +57,11 @@ namespace SpaceGame.Ui
             }
 
             var totalCredits = GameManager.Instance.State.TotalCredits;
-            if (totalCredits > _purchasePrice)
+            if (totalCredits >= _purchasePrice)
             {
                 EnableButton();
             } else
-            if (totalCredits <= _purchasePrice)
+            if (totalCredits < _purchasePrice)
             {
                 DisableButton();
             }

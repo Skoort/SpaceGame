@@ -9,6 +9,8 @@ namespace SpaceGame
         [SerializeField] private float _currValue = 100;
         [SerializeField] private float _maxValue = 100;
 
+        [SerializeField] private Camera[] _cameras = default;
+
         public float Value => _currValue;
         public float MaxValue => _maxValue;
 
@@ -43,15 +45,24 @@ namespace SpaceGame
                 } else
                 if (_team == Team.HUMANS)
                 {
-                    if (gameObject.tag == Strings.PlayerTag || gameObject.tag == Strings.SpaceStationTag)
+                    if (gameObject.tag == Strings.PlayerTag)
                     {
-                        GameManager.Instance.LoadHangarGameOver();
+                        foreach (var camera in _cameras)
+                        {
+                            camera.transform.SetParent(parent: null, worldPositionStays: true);
+                        }
+
+                        GameManager.Instance.LoadScoreScreenGameOver();
+                    } else
+                    if (gameObject.tag == Strings.SpaceStationTag)
+                    {
+                        GameManager.Instance.LoadScoreScreenGameOver();
                     }
                     else
                     {
                         GameManager.Instance.IncrementAllyDeathCount();
                         if (source.tag == Strings.PlayerTag)
-                        { 
+                        {
                             GameManager.Instance.IncrementPlayerAllyKillCount();
                         }
                     }

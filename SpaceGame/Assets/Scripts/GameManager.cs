@@ -161,6 +161,7 @@ namespace SpaceGame
         [SerializeField] private string _hangarSceneName = default;
         [SerializeField] private string _missionSceneNamePrefix = default;
         [SerializeField] private string _controlsSceneName = default;
+        [SerializeField] private string _scoreSceneName = default;
         [SerializeField] private string _endOfGameSceneName = default;
 
         [SerializeField] private bool _isMissionLoaded = false;
@@ -202,7 +203,7 @@ namespace SpaceGame
             --_currentNumEnemies;
             if (_currentNumEnemies <= 0)
             {
-                LoadHangarSuccess();
+                LoadScoreScreenSuccess();
             }
         }
 
@@ -236,12 +237,14 @@ namespace SpaceGame
             ObjectPool.Instance.DoCleanup();
         }
 
+        private string _waitingToLoadLevelName;
+
         private float _savedPlayerHealth;
         private bool _savedHasRocket1;
         private bool _savedHasRocket2;
         private bool _savedHasRocket3;
         private int _savedMissionId;
-        public void LoadHangarGameOver()
+        public void LoadScoreScreenGameOver()
         {
             State.PlayerHealth = _savedPlayerHealth;
             State.HasRocket1 = _savedHasRocket1;
@@ -251,25 +254,21 @@ namespace SpaceGame
 
             State.HangarState = GameState.HangarArrivalState.FAILURE;
 
-            // Screen fade to hangar. Shows text "FAILURE".
-
-            LoadLevel(_hangarSceneName);
+            FadeLevelToBlack(_scoreSceneName);
         }
 
-        public void LoadHangarSuccess()
+        public void LoadScoreScreenSuccess()
         {
             State.HangarState = GameState.HangarArrivalState.SUCCESS;
 
-            // Screen fade to hangar. Shows text "SUCCESS".
-
-            LoadLevel(_hangarSceneName);
+            FadeLevelToBlack(_scoreSceneName);
         }
 
         public void LoadHangarFromMenu()
         {
-            State.HangarState = GameState.HangarArrivalState.MENU;
+            State.HangarState = GameState.HangarArrivalState.MENU;  // We are technically loading the hangar using this state every time now. It shouldn't matter.
 
-            LoadLevel(_hangarSceneName);
+            FadeLevelToBlack(_hangarSceneName);
         }
 
         public void LoadMission(int index)
@@ -283,17 +282,32 @@ namespace SpaceGame
             State.MissionId = index;
 
             var sceneName = $"{_missionSceneNamePrefix} {State.MissionId }";
-            LoadLevel(sceneName);
+            FadeLevelToBlack(sceneName);
         }
 
         public void LoadMainMenu()
         {
-            LoadLevel(_mainMenuSceneName);
+            FadeLevelToBlack(_mainMenuSceneName);
         }
 
         private void LoadLevel(string sceneName)
         {
             SceneManager.LoadScene(sceneName);   
+        }
+
+
+        [SerializeField] private Canvas _transitionCanvas = null;
+        [SerializeField] private Animator _canvasAnimator = null;
+        private void FadeLevelToBlack(string sceneName)
+        {
+            _canvasAnimator.SetTrigger(Strings.SceneTransitionTrigger);
+            _waitingToLoadLevelName = sceneName;
+        }
+
+        public void OnScreenFadedToBlack()
+        {
+            LoadLevel(_waitingToLoadLevelName);
+            _canvasAnimator.SetTrigger(Strings.SceneTransitionReset);
         }
 
 		public List<Target> Targets { get; private set; }
