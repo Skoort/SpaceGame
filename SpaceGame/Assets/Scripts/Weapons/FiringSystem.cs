@@ -86,7 +86,7 @@ namespace SpaceGame.Weapons
 
             DoFire();
 
-            Ammo -= 1;
+            Ammo -= Weapon.AmmoUsedPerShot;
             //NextShotProgress -= 1;
             NextShotProgress = 0;  // This is a temporary fix to the problem of if you don't shoot for a while, NextShotProgress may be very high and make you shoot every frame.
             OnFire?.Invoke();

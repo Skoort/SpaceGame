@@ -2187,6 +2187,7 @@ MonoBehaviour:
   _creditsLabel: {fileID: 1960972825}
   _healthLabel: {fileID: 1567531941}
   _missilesLabel: {fileID: 2038551535}
+  _deployButton: {fileID: 567075246}
 --- !u!1 &742009058
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,6 +47,7 @@ namespace SpaceGame
 		{
             var fixedDeltaTime = Time.fixedDeltaTime;
 
+            _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, 100);
             CalculateHeading();
             HandleMovement(fixedDeltaTime);
 		}

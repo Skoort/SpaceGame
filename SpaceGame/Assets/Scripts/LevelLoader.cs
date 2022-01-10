@@ -7,6 +7,9 @@ namespace SpaceGame
 {
 	public class LevelLoader : MonoBehaviour
     {
+		[SerializeField] private Transform _healthBarPlayer = default;
+		[SerializeField] private Transform _healthBarStation = default;
+
 		[SerializeField] private Spaceship _playerSpaceshipComponent = default;
 		[SerializeField] private HullIntegrity _playerHullIntegrity = default;
 		[SerializeField] private WeaponsSystem _playerWeaponsSystem = default;
@@ -23,10 +26,15 @@ namespace SpaceGame
 			if (_playerHullIntegrity != null)
 			{
 				GameManager.Instance.SetPlayerHullIntegrity(_playerHullIntegrity);
+				_healthBarPlayer.gameObject.SetActive(true);
 			}
 			if (_stationHullIntegrity != null)
 			{
 				GameManager.Instance.SetStationHullIntegrity(_stationHullIntegrity);
+				_healthBarStation.gameObject.SetActive(true);
+				_stationHullIntegrity.SetValues(
+					GameManager.Instance.MaxStationHealth,
+					GameManager.Instance.MaxStationHealth);
 			}
 
 			AssignWeapon();
@@ -61,6 +69,11 @@ namespace SpaceGame
 
 		private void AssignMissiles()
 		{
+			if (_missiles.Length == 0)
+			{
+				return;
+			}
+
 			if (GameManager.Instance.State.HasRocket1)
 			{
 				_missiles[0].gameObject.SetActive(true);

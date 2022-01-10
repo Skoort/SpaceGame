@@ -16,9 +16,16 @@ namespace SpaceGame.Ui
 		[SerializeField] private TextMeshProUGUI _healthLabel = default;
 		[SerializeField] private TextMeshProUGUI _missilesLabel = default;
 
+		[SerializeField] private Button _deployButton = default;
+
 		protected override void Start()
 		{
 			base.Start();
+
+			if (GameManager.State.MissionId == GameManager.NumMissions)
+			{
+				_deployButton.interactable = false;
+			}
 
 			LoadWeapons();
 			LoadTurret();

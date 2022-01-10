@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 323b611839ce89440be3ebab51aaf2db, type: 3}
-  m_Name: Heavy Blaster (Sides) 1
+  m_Name: W2
   m_EditorClassIdentifier: 
   Name: Heavy Blaster (Sides)
   Compartment: 2
@@ -23,6 +23,6 @@ MonoBehaviour:
   IsHitscan: 0
   ProjectilePrefab: {fileID: 4387830455753471212, guid: 336caa8f2d9205d4f999361d6f1c9aac, type: 3}
   Range: 30
-  Spread: 1
+  Spread: 3
   AmmoUsedPerShot: 0
   HeatGeneration: 0

@@ -26,6 +26,11 @@ namespace SpaceGame
 
 		public void TakeDamage(float damage, GameObject source)
         {
+            if (Value <= 0)
+            {
+                return;  // We're already dead and just haven't disappeared yet.
+            }
+
             Debug.Assert(damage > 0, "Attempted to deal negative damage!");
 
             _currValue = Mathf.Clamp(_currValue - damage, 0, _maxValue);

@@ -31,6 +31,7 @@ namespace SpaceGame.Ui
 				_sumCreditsEarnedLabel.gameObject.SetActive(false);
 				_sumCreditsEarnedValue.gameObject.SetActive(false);
 				_reasonsContainer.gameObject.SetActive(false);
+				return;
 			}
 			else
 			{

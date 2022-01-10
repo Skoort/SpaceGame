@@ -173,8 +173,14 @@ namespace SpaceGame
         [SerializeField] private GameState _state = default;
         public GameState State => _state;
 
-        [SerializeField] public float _maxPlayerHealth = 500;
+        [SerializeField] private float _maxPlayerHealth = 500;
         public float MaxPlayerHealth => _maxPlayerHealth;
+        [SerializeField] private float _maxStationHealth = 20000;
+        public float MaxStationHealth => _maxStationHealth;
+
+        [SerializeField] private int _numMissions = 3;
+        public int NumMissions => _numMissions;
+
 
         public void OnPlayerHealthChanged()
         {
@@ -232,7 +238,10 @@ namespace SpaceGame
 
         public void DoCleanup()
         {
-            _stationHullIntegrity.OnChanged -= OnStationHealthChanged;
+            if (_stationHullIntegrity != null)
+            { 
+                _stationHullIntegrity.OnChanged -= OnStationHealthChanged;
+            }
             _playerHullIntegrity.OnChanged -= OnPlayerHealthChanged;
             ObjectPool.Instance.DoCleanup();
         }
@@ -279,9 +288,14 @@ namespace SpaceGame
             _savedHasRocket3 = State.HasRocket3;
             _savedMissionId = State.MissionId;
 
+            State.AllyDeathCount = 0;
+            State.PlayerAllyKillCount = 0;
+            State.PlayerEnemyKillCount = 0;
+            State.CreditsThisMission = 0;
+
             State.MissionId = index;
 
-            var sceneName = $"{_missionSceneNamePrefix} {State.MissionId }";
+            var sceneName = $"{_missionSceneNamePrefix} {State.MissionId}";
             FadeLevelToBlack(sceneName);
         }
 
@@ -302,6 +316,8 @@ namespace SpaceGame
         {
             _canvasAnimator.SetTrigger(Strings.SceneTransitionTrigger);
             _waitingToLoadLevelName = sceneName;
+
+            //DoCleanup();
         }
 
         public void OnScreenFadedToBlack()

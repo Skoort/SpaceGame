@@ -24,6 +24,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Final Scenes/Mission 1.unity
     guid: 4b714b0ad7cb28c4c8fb18d8d4e5d2f2
   - enabled: 1
+    path: Assets/Scenes/Final Scenes/Mission 2.unity
+    guid: 99bca26350a7db146ad1b4bf3e9d5563
+  - enabled: 1
+    path: Assets/Scenes/Final Scenes/Mission 3.unity
+    guid: 1525565465cb9d840a793772ad9651a4
+  - enabled: 1
     path: Assets/Scenes/Final Scenes/Score Screen.unity
     guid: 3d28071da4a0e454faa445272a143899
   m_configObjects: {}

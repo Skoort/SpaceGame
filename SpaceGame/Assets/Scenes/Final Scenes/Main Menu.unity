@@ -1413,10 +1413,10 @@ MonoBehaviour:
   _stationHullIntegrity: {fileID: 0}
   _state:
     _missionId: 0
-    _totalCredits: 5000
+    _totalCredits: 0
     _creditsThisMission: 0
     _playerHealth: 500
-    _stationHealth: 100
+    _stationHealth: 20000
     _playerEnemyKillCount: 0
     _playerAllyKillCount: 0
     _allyDeathCount: 0
@@ -1427,6 +1427,8 @@ MonoBehaviour:
     _hasRocket3: 0
     _hangarState: 2
   _maxPlayerHealth: 500
+  _maxStationHealth: 20000
+  _numMissions: 3
   _transitionCanvas: {fileID: 1379265804}
   _canvasAnimator: {fileID: 1379265806}
 --- !u!4 &1351311123

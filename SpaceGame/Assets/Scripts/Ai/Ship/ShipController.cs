@@ -14,8 +14,8 @@ namespace SpaceGame.Ai.Ship
 
         [SerializeField] private Rigidbody _rb = default;
 
-        [SerializeField] private float _forwardSpeed = 30;
-        [SerializeField] private float _turnSpeed = 80;
+        [SerializeField] private float _forwardSpeed = 33;
+        [SerializeField] private float _turnSpeed = 84;
 
         public Transform Transform => transform;
 
@@ -40,8 +40,8 @@ namespace SpaceGame.Ai.Ship
 
         public ShipState State { get; set; }
 
-        private float _stoppingRangeTarget = 30;
-        private float _stoppingRangeWanderPoint = 10;
+        private float _stoppingRangeTarget = 50;
+        private float _stoppingRangeWanderPoint = 35;
         public float StoppingRange
         {
             get 

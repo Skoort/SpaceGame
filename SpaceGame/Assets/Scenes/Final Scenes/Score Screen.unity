@@ -1218,7 +1218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _loseWinText: {fileID: 1559476572}
-  _sumCreditsEarnedLabel: {fileID: 1040323742}
+  _sumCreditsEarnedLabel: {fileID: 1250425892}
   _sumCreditsEarnedValue: {fileID: 1040323742}
   _reasonsContainer: {fileID: 1737838542}
   _creditsEarnedRowPrefab: {fileID: 2595624593764942964, guid: e2fe4c68cefd771428be1903174485c2, type: 3}
